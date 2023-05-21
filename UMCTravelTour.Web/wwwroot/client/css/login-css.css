@@ -1,0 +1,120 @@
+﻿.container {
+    padding: 2rem 0rem;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 1200px;
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+}
+
+.modal-header .close {
+    margin-top: -1.5rem;
+}
+
+.form-title {
+    margin: -2rem 0rem 2rem;
+}
+
+.btn-round {
+    border-radius: 3rem;
+}
+
+.delimiter {
+    padding: 1rem;
+}
+
+.social-buttons .btn {
+    margin: 0 0.5rem 1rem;
+}
+
+.signup-section {
+    padding: 0.3rem 0rem;
+}
+
+#btnLogModal {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    background-color: transparent;
+    color: white;
+    outline-style: none;
+    font-weight: bold;
+}
+
+    #btnLogModal:hover {
+        color: #14bf98;
+    }
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+}
+
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        background-color: transparent;
+    }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            font-weight: bold;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            border-bottom: 1px solid black;
+        }
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+}
+
+
+/*Star rating */
+.rating {
+    cursor: pointer;
+}
+
+    .rating .rating-star {
+        display: inline-block;
+        position: relative;
+        padding-right: 5px;
+        margin-left: -5px;
+    }
+
+    .rating .selected:before {
+        content: '\f005';
+    }
+
+
+/*Destination css */
+/* id holding the image and the text */
+#carouselExampleControls {
+    text-align: center !important;
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 200px;
+}
+e

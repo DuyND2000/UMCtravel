@@ -1,0 +1,221 @@
+﻿@model PagedVm<UMCTravelTour.ViewModel.Bookings.BookingVm>
+@using UMCTravelTour.Service.Customers;
+@using UMCTravelTour.ViewModel.Customers;
+@using UMCTravelTour.Service.Tours;
+@inject ICustomerService _customerService;
+@inject ITourService _tourService;
+
+@{
+    ViewData["Title"] = "Index";
+    var keyword = "";
+    if (ViewBag.FilterPaging.Keyword != null) keyword = ViewBag.FilterPaging.Keyword as string;
+    var sortBy = ViewBag.FilterPaging.SortBy;
+    var typeOfSort = ViewBag.FilterPaging.TypeOfSort;
+}
+
+<h1>Danh sách Booking</h1>
+<form method="post">
+    <div class="input-group mb-3">
+        <input style="border: 1px solid #00cccd;" type="text" class="form-control col-6" value="@keyword" name="Keyword" placeholder="Nhập ID booking ...">
+        <button type="submit" class="btn btn-success">Tìm</button>  
+    </div>
+</form>
+
+
+
+
+
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.TourParticipantCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.CustomerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.ExpectedPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.Deposit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.TotalPrice)
+            </th>
+            <th class="center pb-0" width="10%">
+                <a asp-action="Create" class="btn btn-primary"><i class="fa fa-plus-square-o menu-icon"></i> Mới</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @item.StartDate.ToShortDateString()
+                </td>
+                <td>
+                    @item.EndDate.ToShortDateString()
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TourParticipantCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @_customerService.GetById(item.CustomerId).CustomerName <br />
+                    <small>ID: @Html.DisplayFor(modelItem => item.CustomerId)</small>
+                </td>
+                <td>
+                    @item.ExpectedPrice.ToString("N0")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Deposit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <!-- Example single danger button -->
+
+            <td class="center">
+                    <div class="btn-group">
+                        @if (item.Status != Constant.StatusBooking.Completed && item.Status != Constant.StatusBooking.Cancelled)
+                        {
+                            <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Trạng thái
+                            </button>
+                            <div class="dropdown-menu">
+                                @if (item.Status == Constant.StatusBooking.Pending || item.StartDate > DateTime.Now)
+                                {
+                                    <a class="dropdown-item" name="submit" data-id="@item.BookingId" data-status="@Constant.StatusBooking.Cancelled">@Constant.StatusBooking.Cancelled</a>
+                                }
+                                <a class="dropdown-item" name="submit" data-id="@item.BookingId" data-status="@Constant.StatusBooking.Approved">@Constant.StatusBooking.Approved</a>
+
+                                <a class="dropdown-item" name="submit" data-id="@item.BookingId" data-status="@Constant.StatusBooking.Deposited">@Constant.StatusBooking.Deposited</a>
+
+                                <a class="dropdown-item" name="submit" data-id="@item.BookingId" data-status="@Constant.StatusBooking.Completed">@Constant.StatusBooking.Completed</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <button style="visibility: hidden;" type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                none
+                            </button>
+                        }
+                    </div>
+                    <div class="btn-group">
+                        <a asp-action="Edit" asp-route-id="@item.BookingId" class="btn btn-outline-success"><i class="fa fa-edit"></i></a>
+                        <form method="post">
+                            <button type="submit" asp-action="Delete" asp-route-id="@item.BookingId" class="btn btn-outline-warning"><i class="fa fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @{
+                string url = "#";
+                if (Model.PageIndex > 1)
+                {
+                    url = $"/admin/Bookings/index?keyword={keyword}&pageIndex={Model.PageIndex - 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" href="@url" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @if (Model.TotalPage <= 5)
+            {
+                for (int i = 1; i <= Model.TotalPage; i++)
+                {
+                    url = $"/admin/Bookings/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            else
+            {
+                int i = Model.PageIndex > 2 ? Model.PageIndex - 2 : 1;
+                int j = Model.PageIndex + 2 > Model.TotalPage ? Model.TotalPage : Model.PageIndex + 2;
+                for (; i <= j; i++)
+                {
+                    url = $"/admin/Bookings/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            <li class="page-item">
+                @{
+                    if (Model.PageIndex < Model.TotalPage)
+                    {
+                        url = $"/admin/Bookings/index?keyword={keyword}&pageIndex={Model.PageIndex + 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    }
+                }
+                <a class="page-link" href="@url" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+    $('[name="submit"]').click(function() {
+        val1 = $(this).attr('data-id');
+        val2 = $(this).attr('data-status');
+        swal({
+                title: "Bạn có muốn thay đổi?",
+                text: "Bạn muốn chuyển trang thái sang " + val2,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("UpdateStatus")",
+                        data: {id: val1, status: val2},
+                        dataType: "text",
+                        success: function () {
+                            window.location.replace("@Url.Action("Index")");
+                        },
+                        error: function (req, status, error) {
+
+                        }
+                    });
+                    swal("Trạng thái đã được thay đổi!", {
+                        icon: "success",
+                        timer: 1500
+                    });
+                } else {
+
+                }
+            });
+    });
+</script>
+
+}
+

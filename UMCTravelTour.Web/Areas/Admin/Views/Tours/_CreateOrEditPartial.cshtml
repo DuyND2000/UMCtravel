@@ -1,0 +1,151 @@
+﻿@model UMCTravelTour.ViewModel.Tours.TourVm
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="TourName" class="control-label"></label>
+                    <input asp-for="TourName" class="form-control" oninput="ChangeUrl('TourName','UrlSlug')" />
+                    <span asp-validation-for="TourName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="UrlSlug" class="control-label"></label>
+                    <input asp-for="UrlSlug" class="form-control" readonly />
+                    <span asp-validation-for="UrlSlug" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="tourImage" class="control-label">Hình ảnh</label><br />
+                    @if (Model == null || string.IsNullOrEmpty(Model.ImageLink))
+                    {
+                        <img id="output" src="~/assets/images/noimage.png" width="100" height="100">
+                    }
+                    else
+                    {
+                        <img id="output" src="~/@Model.ImageLink" width="100" height="100">
+                        <input asp-for="ImageLink" hidden />
+                    }
+                    <br />
+                    <input name="tourImage" type="file" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+                    <span asp-validation-for="ImageLink" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Địa điểm</label>
+                    <input class="form-control" value="@ViewBag.locationName" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Thời gian</label>
+                    <input asp-for="Duration" class="form-control" />
+                    <span asp-validation-for="Duration" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6" id="hotelAndRestaurant">
+                <div class="form-group">
+                    @await Component.InvokeAsync("TourLocation", ViewBag.locationId)
+                    <span class="text-danger">@Html.ValidationMessageFor(model => model.restaurantId)</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Mô tả</label>
+                    <textarea asp-for="Description" class="form-control" style="min-height: 500px;"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Thời gian biểu</label>
+                    <textarea asp-for="Schedule" class="form-control"  style="min-height: 500px;"></textarea>
+                    <span asp-validation-for="Schedule" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label">Mô tả ngắn gọn</label>
+                    <textarea asp-for="ShortDescription" class="form-control" rows="7"></textarea>
+                    <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Tổng chi phí</label>
+                    <input asp-for="TotalPrice" class="form-control" />
+                    <span asp-validation-for="TotalPrice" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Trạng thái</label>
+                    <select asp-for="Status" class="form-control">
+                        @{
+                            var properties = typeof(Constant.StatusTour).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy).ToList();
+                        }
+                        @if (Model != null && !string.IsNullOrEmpty(Model.Status))
+                        {
+                            foreach (var item in properties)
+                            {
+                                var value = item.GetValue(item.Name).ToString();
+                                if (Model.Status == value)
+                                {
+                                    <option value="@value" selected>@value</option>
+                                }
+                                else
+                                {
+                                    <option value="@value">@value</option>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in properties)
+                            {
+                                var value = item.GetValue(item.Name).ToString();
+                                <option value="@value">@value</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Ngày tạo</label>
+                    @if (Model == null)
+                    {
+                        <input asp-for="CreatedDate" type="text" class="form-control" value="@DateTime.Now.ToString()" readonly />
+                    }
+                    else
+                    {
+                        <input asp-for="CreatedDate" type="text" class="form-control" readonly>
+                    }
+                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                </div>
+            </div>
+            @*<div class="col-md-6">
+                <div class="form-group">
+            <label class="control-label">Đánh giá</label>
+                    <input asp-for="Rating" class="form-control" />
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+            </div>*@
+        </div>
+    </div>
+
+</div>
+<script>
+    $("#hotelAndRestaurant");
+</script>

@@ -1,0 +1,436 @@
+﻿@{
+    ViewData["Title"] = "Thiết kế tour";
+}
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+@{
+    var restaurantType = ViewBag.RestaurantList.GetType().GetGenericArguments()[0];
+}
+
+@if (TempData["DesignSuccess"] != null)
+{
+    <script>
+        swal({
+            title: "Success",
+            text: "@TempData["DesignSuccess"]",
+            icon: "success",
+            buttons: false,
+        })
+    </script>
+}
+else if (TempData["DesignError"] != null)
+{
+    <script>
+        swal({
+            title: "Failed",
+            text: "@TempData["DesignError"]",
+            icon: "error",
+            buttons: false,
+        })
+    </script>
+}
+
+<script src="https://momentjs.com/downloads/moment.js"></script>
+
+<script>
+    function checkAll() {
+        $(".ckcbox").prop("checked", $('#ckcAll').prop('checked'));
+    }
+
+    var roomJsList = [
+    @{
+        for (int i = 0; i < ViewBag.RoomList.Count; i++)
+        {
+            @:{ hotelId: @ViewBag.RoomList[i].HotelId,
+            @:roomId: @ViewBag.RoomList[i].RoomId,
+            @:price: @ViewBag.RoomList[i].Price.ToString().Replace(",", ".")
+            @:}
+            @if (i < ViewBag.RoomList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+            ];
+
+    var hotelJsList = [
+    @{
+        for (int i = 0; i < ViewBag.HotelList.Count; i++)
+        {
+            @:{ hotelId: @ViewBag.HotelList[i].HotelId,
+            @:hotelName: "@ViewBag.HotelList[i].HotelName",
+            @:locationId: @ViewBag.HotelList[i].LocationId
+            @:}
+            @if (i < ViewBag.HotelList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+            ];
+
+    var restaurantJsList = [
+    @{
+        for (int i = 0; i < ViewBag.RestaurantList.Count; i++)
+        {
+            @:{ restaurantId: @ViewBag.RestaurantList[i].RestaurantId,
+            @:restaurantName: "@ViewBag.RestaurantList[i].RestaurantName",
+            @:locationId: @ViewBag.RestaurantList[i].LocationId
+            @:}
+            @if (i < ViewBag.RestaurantList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+            ]
+
+    function LocationBaseList() {
+        debugger;
+        if(document.getElementById("select-location") != null){
+        var selectedValue = document.getElementById("select-location").value;
+        }
+        var hotelSelectList = document.getElementById("select-hotel");
+        var restaurantSelectList = document.getElementById("select-restaurant");
+        var htmlList = '<option value="0" selected>--Pick a hotel--</option>';
+    @foreach (var item in ViewBag.HotelList)
+    {
+        @:if (@item.LocationId=== selectedValue)
+        {
+            @:htmlList += '<option value="@item.HotelId">@item.HotelName</option>';
+        }
+    }
+            hotelSelectList.innerHTML = htmlList;
+
+        var restaurantHtmlList = '';
+    @{
+        int d = 0;
+    }
+    @foreach (var item in ViewBag.RestaurantList)
+    {
+        @:if (@item.LocationId=== selectedValue)
+        {
+            @:restaurantHtmlList +=`
+                                                            <tr>
+                                                            <td>
+                                                                            <input type="checkbox" class="form-control ckcbox" id="ckcbox@d" value="@item.RestaurantId" />
+                                                                        </td>
+                                                                        <td>
+                    @d
+                                                                        </td>
+                                                                        <td>
+                    @item.RestaurantName
+                                                                        </td>
+                                                                        <td>
+                                                                            <img style="width:50px" src="~/@item.ImageLink" alt="Alternate Text" />
+                                                                        </td>
+                                                                        <td>
+                    @item.Phone
+                                                                        </td>
+                                                                        <td>
+                    @item.Email
+                                                                        </td>
+                                                                    </tr>
+            @:`;
+        }
+    }
+            restaurantSelectList.innerHTML = restaurantHtmlList;
+        HotelBaseList();
+    }
+    LocationBaseList();
+
+    function FindRestaurantName(value) {
+        for (let i = 0; i < restaurantJsList.length; i++) {
+            if (+restaurantJsList[i].restaurantId === value)
+                return restaurantJsList[i].restaurantName;
+        }
+        return null;
+    }
+
+    var restaurantSelectedList = [];
+
+    function RestaurantSaveChanges() {
+        var checkboxes = document.getElementsByClassName("ckcbox");
+        restaurantSelectedList = [];
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                restaurantSelectedList.push(+checkboxes[i].value);
+            }
+        }
+        document.getElementById("jsonRestaurant").value = JSON.stringify(restaurantSelectedList);
+        RestaurantListUpdate();
+    }
+
+    function RestaurantListUpdate() {
+        var selectedHtml = "";
+        for (let i = 0; i < restaurantSelectedList.length; i++) {
+            selectedHtml += FindRestaurantName(+restaurantSelectedList[i]) + "<br/>";
+        }
+        document.getElementById("restaurant-selected").innerHTML = selectedHtml;
+        DisableSubmit();
+    }
+
+    function FindElement(array, value) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i] === value)
+                return true;
+        }
+        return false;
+    }
+
+    function CheckboxRecovery() {
+        var checkboxes = document.getElementsByClassName("ckcbox");
+        for (let i = 0; i < checkboxes.length; i++) {
+            if (FindElement(restaurantSelectedList, +checkboxes[i].value))
+                checkboxes[i].checked = true;
+            else
+                checkboxes[i].checked = false;
+        }
+    }
+
+    function HotelBaseList() {
+        var roomSelect = document.getElementById("select-room");
+        var selectedHotel = +document.getElementById("select-hotel").value;
+        var html = "<option value='-1'>--Pick room type--</option>";
+    @foreach (var item in ViewBag.RoomList)
+    {
+        @:if (@item.HotelId=== selectedHotel)
+        @:{
+        @:html+= '<option value="@item.RoomId">@item.RoomName</option>';
+        @:}
+    }
+        roomSelect.innerHTML = html;
+            }
+
+    function FindRoomPrice(hotelId, roomId) {
+        for (let i = 0; i < roomJsList.length; i++) {
+            if (roomJsList[i].hotelId == hotelId && roomJsList[i].roomId == roomId) {
+                return roomJsList[i].price;
+            }
+        }
+        return 0;
+    }
+
+    function UpdatePrice() {
+        var price = 0;
+        var tourParticipant = +document.getElementById("tour-participant").value;
+        var roomPrice = FindRoomPrice(+document.getElementById("select-hotel").value, +document.getElementById("select-room").value);
+        var days = moment.duration
+            (
+                moment(document.getElementById("end-date").value).diff
+                    (
+                        moment(document.getElementById("start-date").value)
+                    )
+            ).asDays();
+        price = tourParticipant * roomPrice * days * 1.05;
+        if (isNaN(price))
+            price = "Please fill all fields";
+        else
+            price = "$" + price;
+        document.getElementById("expected-price").innerHTML = price;
+    }
+</script>
+
+<partial name="_HeaderPartial" />
+
+<div class="container container-book">
+    <h1>Thoả sức sáng tạo tour theo ý thích</h1>
+    <form class="form-booking" method="post">
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Tên đầy đủ</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="CustomerName" id="customer-name" onchange="CheckCurrent('customer-name')" placeholder="Tên đầy đủ">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Số điện thoại</label>
+            <div class="col-sm-10">
+                <input type="tel" class="form-control" name="Phone" id="phone" onchange="CheckCurrent('phone')" placeholder="Số điện thoại">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" name="Email" id="email" onchange="CheckCurrent('email')" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Địa chỉ</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="Address" id="address" onchange="CheckCurrent('address')" placeholder="Địa chỉ">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Tên chuyến đi</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="TourName" id="tourname" onchange="CheckCurrent('tourname')" placeholder="Tên chuyến đi">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Số lượng tham gia</label>
+            <div class="col-sm-10">
+                <input type="number" min-value="1" class="form-control" onchange="UpdatePrice()" name="TourParticipantCount" id="tour-participant" placeholder="Số lượng">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Ngày khởi hành</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" onchange="UpdatePrice()" name="StartDate" id="start-date" placeholder="Start date from">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Ngày kết thúc</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" onchange="UpdatePrice()" name="EndDate" id="end-date" placeholder="End date">
+            </div>
+        </div>
+        @*<div class="form-group row">
+        <label for="" class="col-sm-2 col-form-label">Phương tiện</label>
+        <div class="col-sm-10">
+        <select id="vehicle">
+        <option value="">Tàu</option>
+        <option value="">Ô tô</option>
+        <option value="">Máy bay</option>
+        <option value="" selected>--chọn phương tiện--</option>
+        </select>
+        </div>
+        </div>*@
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Location</label>
+            <div class="col-sm-10">
+                <!--<select id="">
+                    <option value="1">Hà Nội</option>
+                    <option value="1">Hải Phòng</option>
+                    <option value="1">Tp Hồ Chí Minh</option>
+                    <option value="1" selected>--chọn địa điểm đến--</option>
+                </select>-->
+                <select aria-label="label for the select" asp-items="ViewBag.LocationList" id="select-location" onchange="LocationBaseList()">
+                    <option value="-1" selected>--Pick a location--</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Khách sạn</label>
+            <div class="col-sm-10">
+                <select id="select-hotel" name="HotelId" onchange="HotelBaseList()">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Loại phòng</label>
+            <div class="col-sm-10">
+                <select id="select-room" onchange="UpdatePrice()" name="RoomId">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Nhà hàng</label>
+            <div class="col-sm-10">
+                <p id="restaurant-selected"></p>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" onclick="CheckboxRecovery()" data-toggle="modal" data-target="#RestaurantModal">
+                    Change restaurant
+                </button>
+                <input type="hidden" name="jsonRestaurant" id="jsonRestaurant" />
+                <!-- Modal -->
+                <div class="modal fade" id="RestaurantModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" style="min-width:90%" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Restaurant list</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input id="ckcAll" type="checkbox" class="form-control" onchange="checkAll()" />
+                                            </th>
+                                            <th>No.</th>
+                                            <th>
+                                                Tên nhà hàng
+                                            <th>
+                                                Hình ảnh
+                                            </th>
+                                            <th>
+                                                Số điện thoại
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="select-restaurant">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="RestaurantSaveChanges()">Lưu thay đổi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Chi phí dự tính</label>
+            <div class="col-sm-10">
+                <span id="expected-price">0</span>vnđ
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="" class="col-sm-2 col-form-label">Ghi chú</label>
+            <div class="col-sm-10">
+                <textarea name="Note" id="" cols="8" rows="5"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <button type="submit" class="btn btn-primary" id="submission">Gửi yêu cầu</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function DisableSubmit() {
+        if (document.getElementById("restaurant-selected").innerHTML == "")
+            document.getElementById("submission").disabled = true;
+        else
+            document.getElementById("submission").disabled = false;
+    }
+    DisableSubmit();
+
+    function CheckCurrent(id) {
+        if (document.getElementById(id + []).innerHTML == "")
+            document.getElementById("submission").disabled = true;
+        else
+            document.getElementById("submission").disabled = false;
+    }
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@if (TempData["DesignSuccess"] != null)
+{
+    <script>
+        swal({
+            title: "Success",
+            text: "@TempData["DesignSuccess"]",
+            icon: "success",
+            buttons: false,
+        })
+    </script>
+}
+else if (TempData["DesignError"] != null)
+{
+    <script>
+        swal({
+            title: "Failed",
+            text: "@TempData["DesignError"]",
+            icon: "error",
+            buttons: false,
+        })
+    </script>
+}

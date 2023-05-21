@@ -1,0 +1,146 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using UMCTravelTour.Core.CustomIdentity
+@inject UMCTravelTour.DAL.Infrastructures.IUnitOfWork unitOfWork
+@{
+    var requestedLanguage = Context.Request.Query["lang"].ToString();
+    if (requestedLanguage == String.Empty)
+        requestedLanguage = "en";
+    ViewBag.LanguagePack = unitOfWork.StaticContentRepository.GetById(requestedLanguage);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Website Title -->
+    <title>UMC Travel</title>
+
+    <!-- Styles -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap&subset=latin-ext" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600&display=swap&subset=latin-ext" rel="stylesheet" />
+    <link href="~/client/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link href="~/client/css/swiper.css" rel="stylesheet" />
+    <link href="~/client/css/magnific-popup.css" rel="stylesheet" />
+    <link href="~/client/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/client/css/tourdetail.css">
+    <link rel="stylesheet" href="~/client/css/tracking.css">
+
+    <!-- Favicon  -->
+    <link rel="icon" href="~/client/images/icon.png" style="width:300%; height:300%"/>
+    <link rel="stylesheet" href="~/client/css/login-css.css" />
+
+    <style>
+        p#highlight_tag > a {
+            margin-top: 3px;
+            margin-bottom: 3px;
+            text-align: center;
+            width: 150px;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target=".fixed-top">
+
+    <!-- Preloader -->
+    <div class="spinner-wrapper">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </div>
+    <!-- end of preloader -->
+    <!-- Navbar -->
+    <partial name="_NavigationPartial" />
+    <!-- end of navbar -->
+    <!-- Option Header -->
+    <!-- main -->
+    @RenderBody()
+    <!-- main -->
+    <!-- login modal -->
+    <!-- login modal -->
+    @inject SignInManager<DreamTourUser> SignInManager
+
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px !important;">
+                <div class="modal-content">
+                    @if (ViewBag.LoginMode == "active")
+                    {
+                        <div class="modal-header border-bottom-0">
+                            <!-- Tab links -->
+                    <div class="tab row pb-0">
+                                <button id="defaultOpen" class="tablinks col-md-6" onclick="openCity(event, 'Login')" style="width: 150px;">Đăng nhập</button>
+                                <button class="tablinks col-md-6" onclick="openCity(event, 'Register')">Đăng ký</button>
+                            </div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="Login" class="tabcontent row pt-0">
+                                <partial name="_UserLoginPartial" />
+                            </div>
+                            <div id="Register" class="tabcontent row rounded-bottom">
+                                <partial name="_UserRegistrationPartial" />
+                            </div>
+                        </div>
+
+                        <div class="modal-footer d-flex justify-content-center">
+                            <a class="text-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="font-size: 12px; font-style: italic; cursor: pointer;">
+                                <span data-toggle="tooltip" data-placement="top" title="Chúng tôi sẽ gửi mật khẩu mới đến mail của bạn !!">Quên mật khẩu?</span>
+                            </a>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body">
+                                    <form asp-action="ResetPassword" asp-controller="UserAuth">
+                                        <input type="text" name="email" class="form-control" placeholder="Email của bạn..." required />
+                                        <button type="submit" class="btn btn-warning">Lấy lại mật khẩu</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    <!-- Footer -->
+    <partial name="_FooterPartial" />
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/client/js/jquery.min.js"></script>
+    <!-- jQuery for Bootstrap's JavaScript plugins -->
+    <script src="~/client/js/popper.min.js"></script>
+    <!-- Popper tooltip library for Bootstrap -->
+    <script src="~/client/js/bootstrap.min.js"></script>
+    <!-- Bootstrap framework -->
+    <script src="~/client/js/jquery.easing.min.js"></script>
+    <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script src="~/client/js/swiper.min.js"></script>
+    <!-- Swiper for image and text sliders -->
+    <script src="~/client/js/jquery.magnific-popup.js"></script>
+    <!-- Magnific Popup for lightboxes -->
+    <script src="~/client/js/morphext.min.js"></script>
+    <!-- Morphtext rotating text in the header -->
+    <script src="~/client/js/isotope.pkgd.min.js"></script>
+    <!-- Isotope for filter -->
+    <script src="~/client/js/validator.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Validator.js - Bootstrap plugin that validates forms -->
+    <script src="~/client/js/scripts.js"></script>
+    <script src="~/client/js/site.js"></script>
+    <script src="~/client/js/booking.js"></script>
+
+    <!-- Custom scripts -->
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+
+</html>

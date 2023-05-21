@@ -1,0 +1,151 @@
+﻿@using UMCTravelTour.ViewModel.Locations
+@using UMCTravelTour.ViewModel.Restaurants
+@model LocationVm
+@{
+    var res =  ViewBag.restaurants;
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+    function checkAll(){
+        $(".ckcbox").prop("checked", $('#ckcAll').prop('checked'));
+    }
+    $(document).ready(function() {
+        function getRestaurant(){
+            var restaurant = JSON.parse('@Html.Raw(ViewBag.restaurants)');
+            if(restaurant.length > 0){
+                appenData(restaurant);
+               var ckcboxs = document.getElementsByClassName("ckcbox");
+                for(let i = 0; i < ckcboxs.length; i++){
+                    for(let j=0; j< restaurant.length; j++)
+                    {
+                        if(ckcboxs[i].value == restaurant[j].Id)
+                           ckcboxs[i].checked = true;
+                    }
+                      
+                    }
+                }
+            }
+    getRestaurant();
+    });
+    
+    function appenData(restaurant){
+        var res = ``;
+        var res1 = ``;
+        for(var j=0;j<restaurant.length;j++){
+            res+= `<tr><td>${restaurant[j].Name}</td></tr>`;
+            res1+= `<option value="${restaurant[j].Id}" selected></option>`;
+            console.log(restaurant[j].Name)
+        }
+
+        document.getElementById('resList').innerHTML = res + `<select name="restaurantId" hidden multiple>${res1}</select>`;
+    }
+     function saveChanges(){
+        var restaurant = [];
+        var arr = document.getElementsByClassName("ckcbox");
+        for(var i=0;i < arr.length;i++){
+             if(arr[i].checked){
+                 var resName = (arr[i].parentElement).nextElementSibling.nextElementSibling.innerText;
+                 restaurant.push({Id:arr[i].value, Name: resName});
+             }
+        }
+        appenData(restaurant);
+    }
+</script>
+
+
+
+@{
+    ViewData["Hotels"] = new SelectList(Model.Hotels, "HotelId", "HotelName");
+    ViewData["Restaurants"] = new SelectList(Model.Restaurants, "RestaurantId", "RestaurantName");
+}
+
+
+<div class="form-group">
+    <label for="hotelId" class="control-label">Hotels</label>
+    <select id="hotelId" name="hotelId" class="form-control" asp-items="ViewBag.Hotels"></select>
+</div>
+
+<div class="form-group">
+    <label for="restaurantList" class="control-label">Restaurants</label>
+    <table id="resList" class="table table-borderd border">
+      
+    </table>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Add/Remove restaurant
+    </button>
+</div>
+
+
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add or remove restaurant</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input id="ckcAll" type="checkbox" class="form-control" onchange="checkAll()" />
+                            </th>
+                            <th>No.</th>
+                            <th>
+                                @Html.DisplayNameFor(l => l.Restaurants.GetEnumerator().Current.RestaurantName)
+                            <th>
+                                    @Html.DisplayNameFor(l => l.Restaurants.GetEnumerator().Current.ImageLink)
+                            </th>
+                            <th>
+                                    @Html.DisplayNameFor(l => l.Restaurants.GetEnumerator().Current.Phone)
+                            </th>
+                            <th>
+                                    @Html.DisplayNameFor(l => l.Restaurants.GetEnumerator().Current.Status)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int d = 0;
+                        }
+                        @foreach (var item in Model.Restaurants)
+                        {
+                            d++;
+                            <tr>
+                                <td>
+                                    <input type="checkbox" class="form-control ckcbox" value="@item.RestaurantId" />
+                                </td>
+                                <td>
+                                    @d
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RestaurantName)
+                                </td>
+                                <td>
+                                    <img style="width:50px" src="~/@item.ImageLink" alt="Alternate Text" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Phone)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer" style="position: sticky; bottom: 0; background-color: white;">
+                <button onclick="saveChanges()" type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+}

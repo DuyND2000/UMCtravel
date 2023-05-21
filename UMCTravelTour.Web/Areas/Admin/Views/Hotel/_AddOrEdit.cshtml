@@ -1,0 +1,101 @@
+﻿@model UMCTravelTour.ViewModel.Hotels.HotelVm
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="HotelName" class="control-label"></label>
+            <input asp-for="HotelName" class="form-control" oninput="ChangeUrl('HotelName','UrlSlug')" />
+            <span asp-validation-for="HotelName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UrlSlug" class="control-label"></label>
+            <input asp-for="UrlSlug" class="form-control" readonly />
+            <span asp-validation-for="UrlSlug" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LocationId" class="control-label"></label>
+            <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone" class="control-label"></label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageLink" class="control-label"></label><br />
+            @*  @if(Model != null && !string.IsNullOrEmpty(Model.ImageLink))
+                {
+                <img src = "~/@Model.ImageLink" style = "width: 100px" id = "imageShow" alt ="@Model.HotelName"/>
+                <button class = "btn btn-danger" type = "button" onclick = "deleteImage(this)">Remove Image</button>
+                }*@
+            @if (Model == null || string.IsNullOrEmpty(Model.ImageLink))
+            {
+                <img id="output" src="~/assets/images/noimage.png" width="100" height="100">
+            }
+            else
+            {
+                <img id="output" src="~/@Model.ImageLink" asp-append-version="true" width="100" height="100">
+                <input asp-for="ImageLink" hidden />
+            }<br />
+            <input name="Image" type="file" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoomPrice" class="control-label"></label>
+            <input type="number" asp-for="RoomPrice" class="form-control" />
+            <span asp-validation-for="RoomPrice" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Status" class="control-label"></label>
+            <select style="border: 1px solid #00cccd;" name="Status" class="form-control">
+                @{
+                    var properties = typeof(Constant.StatusHotel).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy).ToList();
+                }
+                @if (Model != null && !string.IsNullOrEmpty(Model.Status))
+                {
+                    foreach (var item in properties)
+                    {
+                        var value = item.GetValue(item.Name).ToString();
+                        if (Model.Status == value)
+                        {
+                            <option value="@value" selected>@value</option>
+                        }
+                        else
+                        {
+                            <option value="@value">@value</option>
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var item in properties)
+                    {
+                        var value = item.GetValue(item.Name).ToString();
+                        <option value="@value">@value</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="ShortDescription" class="control-label"></label>
+            <textarea asp-for="ShortDescription" class="form-control" cols="50" rows="5"></textarea>
+            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+</div>

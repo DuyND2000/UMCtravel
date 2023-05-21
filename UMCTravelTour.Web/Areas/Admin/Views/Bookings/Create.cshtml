@@ -1,0 +1,154 @@
+﻿@model UMCTravelTour.ViewModel.Bookings.BookingVm
+@using UMCTravelTour.Service.Customers;
+@using UMCTravelTour.Service.Rooms
+@using UMCTravelTour.ViewModel.Customers;
+@using UMCTravelTour.Service.Tours;
+@inject ICustomerService _customerService;
+@inject ITourService _tourService;
+@inject IRoomService _roomService;
+@{
+    ViewData["Title"] = "Create";
+}
+
+<script>
+    @{
+        var tourList = _tourService.GetAll().ToList();
+        var roomList = _roomService.GetAll().ToList();
+    }
+
+    var tourJsList = [
+    @{
+        for (int i = 0; i < tourList.Count; i++)
+        {
+            @:{tourId: @tourList[i].TourId,
+            @:hotelId: @tourList[i].HotelId
+            @:}
+            @if (i < tourList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+        ];
+
+    var roomJsList = [
+    @{
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            @:{hotelId: @roomList[i].HotelId,
+            @:roomId: @roomList[i].RoomId,
+            @:roomName: "@roomList[i].RoomName",
+            @:price: @roomList[i].Price
+            @:}
+            @if (i < roomList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+        ];
+
+    function GetHotelId()
+    {
+        var selected = +document.getElementById("select-tour").value;
+        for(let i=0;i<tourJsList.length;i++)
+        {
+            if(tourJsList[i].tourId==selected)
+                return tourJsList[i].hotelId;
+        }
+        return NaN;
+    }
+
+    function GetRoomList()
+    {
+        var htmlList = '<option value="0" selected>--Chọn khách sạn--</option>';
+        var hotelId = GetHotelId();
+        for(let i=0;i<roomJsList.length;i++)
+        {
+            if(roomJsList[i].hotelId == hotelId)
+            {
+                htmlList+=`<option value="${roomJsList[i].roomId}">${roomJsList[i].roomName}</option>`;
+            }
+        }
+        document.getElementById("select-room").innerHTML = htmlList;
+    }
+    GetRoomList();
+</script>
+
+<h1>Tạo booking</h1>
+
+<h4>Booking</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="TourId" class="control-label">Tên tour</label>
+                <select asp-for="TourId" class="form-control" asp-items="ViewBag.TourId" id="select-tour" onchange="GetRoomList()"></select>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.CustomerName"></label>
+                        <input type="text" asp-for="@Model.Customer.CustomerName" placeholder="Họ và tên" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.Phone"></label>
+                        <input type="tel" asp-for="@Model.Customer.Phone" placeholder="Số điện thoại" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TourParticipantCount" class="control-label"></label>
+                        <input asp-for="TourParticipantCount" class="form-control" />
+                        <span asp-validation-for="TourParticipantCount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RoomId" class="control-label"></label>
+                        <select name="RoomId" id="select-room" class="form-control"></select>
+                        <span asp-validation-for="RoomId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.Address"></label>
+                        <input type="text" asp-for="@Model.Customer.Address" placeholder="Địa chỉ" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.Email"></label>
+                        <input type="text" asp-for="@Model.Customer.Email" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Note" class="control-label"></label>
+                        <input asp-for="Note" class="form-control" />
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label"></label>
+                        <select disabled style="border: 1px solid #00cccd;" name="Status" class="form-control">
+                            <option selected value="@Constant.StatusBooking.Pending">@Constant.StatusBooking.Pending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

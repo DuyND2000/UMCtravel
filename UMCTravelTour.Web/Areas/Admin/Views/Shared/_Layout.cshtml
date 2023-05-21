@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý UMCTravel</title>
+
+    <link rel="stylesheet" href="~/assets/vendors/mdi/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="~/assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+    <link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.base.css" />
+    <link rel="stylesheet" href="~/assets/vendors/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    <link rel="icon" href="~/client/images/icon.png" />
+    <link rel ="stylesheet"  href="~/richtexteditor/rte_theme_default.css"   />
+    @RenderSection("linkGame", required: false)
+
+    <style type="text/css">
+        .center {
+            text-align: center;
+        }
+
+        input.form-control, select.form-control, textarea.form-control {
+            border: 1px solid #00cccd !important;
+        }
+
+        select.form-control {
+            color: black;
+        }
+
+        #panel {
+            position: relative;
+             left:130px;
+        }
+        footer {
+            height: 100px;
+            position: relative;
+        }
+
+        #footer-db {
+            margin-left: 450px;
+            margin-top: 30px;
+            text-align: center;
+            position: absolute;
+        }
+
+        div#profileLogout div.row:hover {
+            background-color: #ededed;
+        }
+        
+       
+    </style>
+
+    @section cphPageHead{
+    <style type="text/css" media="screen and (max-width:959px)">
+    </style>
+    <style type="text/css" media="screen and (min-width:960px)">
+    </style>
+    }
+</head>
+
+<body>
+    <div class="container-scroller">
+        <partial name="_SidebarPartial" />
+        <div class="container-fluid page-body-wrapper" id="fix">
+            <partial name="_TopbarPartial" />
+            <div class="main-panel" id="panel">
+                <div class="content-wrapper" id="content">
+                    @RenderBody()
+                </div>
+                <div>
+                    <partial name="_FooterPartial" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- plugins:js -->
+    <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/assets/vendors/chart.js/Chart.min.js"></script>
+    <script src="~/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/assets/vendors/flot/jquery.flot.js"></script>
+    <script src="~/assets/vendors/flot/jquery.flot.resize.js"></script>
+    <script src="~/assets/vendors/flot/jquery.flot.categories.js"></script>
+    <script src="~/assets/vendors/flot/jquery.flot.fillbetween.js"></script>
+    <script src="~/assets/vendors/flot/jquery.flot.stack.js"></script>
+    <script src="~/assets/vendors/flot/jquery.flot.pie.js"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/assets/js/off-canvas.js"></script>
+    <script src="~/assets/js/hoverable-collapse.js"></script>
+    <script src="~/assets/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="~/assets/js/dashboard.js"></script>
+    <script src="~/js/UrlHelper.js"></script>
+    <script src="~/richtexteditor/rte.js"></script>
+    <script scr="~/richtexteditor/plugins/all_plugins.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <!-- End custom js for this page -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

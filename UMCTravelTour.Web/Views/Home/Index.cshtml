@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.LoginMode = "active";
+}
+<!-- header -->
+<partial name="_HeaderPartial" />
+
+
+<!-- Stuff -->
+<!-- stuff -->
+
+@section Scripts{
+    <script>
+        document.getElementById("defaultOpen").click();
+
+        $("#btnLogModal").click();
+
+        if('@TempData["verifyMsg"]' != ""){
+            alert('@TempData["verifyMsg"]');
+        }
+    </script>
+}

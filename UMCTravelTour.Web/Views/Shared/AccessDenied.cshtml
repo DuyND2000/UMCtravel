@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Access denied";
+    Layout = "";
+}
+
+<style>
+    h1{
+        color: red;
+        font-size: 100px;
+    }
+    p {
+        color: red;
+        font-size: 50px;
+    }
+
+    .container {
+        width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <p>Không có quyền truy cập</p>
+    <img src="https://media.istockphoto.com/vectors/shield-with-hand-block-icon-in-flat-style-with-shadow-vector-id867726980?k=20&m=867726980&s=612x612&w=0&h=ge5fg-rTBLy_OVAyhCiawo4Ou9bHcIQ9WtVORH20N8U=" alt="denied"/>
+</div>
+
+<script>
+    window.setTimeout(myFunction, 2000);
+
+    function myFunction() {
+      alert("Đi tới Admin")
+      history.back();
+    }
+</script>

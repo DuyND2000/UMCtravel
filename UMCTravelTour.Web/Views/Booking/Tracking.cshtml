@@ -1,0 +1,159 @@
+﻿@model UMCTravelTour.ViewModel.Bookings.BookingVm
+@{
+    ViewData["Title"] = "Booking Tracking";
+}
+<partial name="_HeaderPartial" />
+<div oncontextmenu='' class='snippet-body'>
+        <div class="container">
+            <article class="card">
+                <header class="card-header"> Tracking your booking </header>
+                <div class="card-body">
+                    <h3>BOOKING CONFIRMATION</h3>
+                    <article class="card">
+                        <div class="card-body row">
+                            <div class="col"> <strong>Estimated Delivery time:</strong> <br>29 nov 2019 </div>
+                            <div class="col"> <strong>Shipping BY:</strong> <br> BLUEDART, | <i class="fa fa-phone"></i> +1598675986 </div>
+                            <div class="col"> <strong>Status:</strong> <br> Picked by the courier </div>
+                            <div class="col"> <strong>Tracking #:</strong> <br> BD045903594059 </div>
+                        </div>
+                    </article>
+                    <div class="track">
+                        <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
+                        <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+                        <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
+                        <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
+                    </div>
+                    <hr style="margin-top: 150px;">
+                    <table class="table">
+                        <tr>
+                            <td scope="col">BOOKING #</th>
+                                <td scope="col">000001</th>
+                                    <td scope="col">Your BusinessName</th>
+                        </tr>
+                        <tr>
+                            <td>BOOKING DATE</td>
+                            <td>mm/dd/yyyy</td>
+                            <td>Your Street 123<br> 12345 Your City<br>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BOOKING DETAILS</td>
+                            <td></td>
+                            <td>
+                                Your Country
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Check in</td>
+                            <td>mm/dd/yyyy</td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Check out</td>
+                            <td>mm/dd/yyyy</td>
+                            <td>
+                                youremail@email.com
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Roome type</td>
+                            <td>single</td>
+                            <td>
+                                yourwebsite.com
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#Guests</td>
+                            <td>0</td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BOOKED BY</td>
+                            <td></td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td style="font-weight: bold;">Guest Name</td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Contact</td>
+                            <td style="font-weight: bold;"> <u>quest@gmail.com</u> </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">DESCRIPTION</th>
+                                <th scope="col">UNIT COST</th>
+                                <th scope="col">QUANTITY</th>
+                                <th scope="col">AMOUNT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">aaaaaaaaaaaaaaaaaa</th>
+                                <td>$</td>
+                                <td style="text-align: center;">1</td>
+                                <td>$</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">aaaaaaaaaaaaaaaaaa</th>
+                                <td>$</td>
+                                <td style="text-align: center;">1</td>
+                                <td>$</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">aaaaaaaaaaaaaaaaaa</th>
+                                <td>$</td>
+                                <td style="text-align: center;">1</td>
+                                <td>$</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">aaaaaaaaaaaaaaaaaa</th>
+                                <td>$</td>
+                                <td style="text-align: center;">1</td>
+                                <td>$</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <th scope="row"></th>
+                                <td></td>
+                                <td>Subtotal</td>
+                                <td>$</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <th scope="row"></th>
+                                <td></td>
+                                <td>VAT rate(%)</td>
+                                <td style="text-align: center;">0%</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <th scope="row"></th>
+                                <td></td>
+                                <td>VAT</td>
+                                <td>$</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <th scope="row"></th>
+                                <td></td>
+                                <td>Total</td>
+                                <td>$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <a href="#" class="btn btn-warning" data-abc="true"> <i class="fa fa-chevron-left"></i> Back to orders</a>
+                </div>
+            </article>
+        </div>
+    </div>

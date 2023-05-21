@@ -1,0 +1,44 @@
+﻿@model UMCTravelTour.ViewModel.Rooms.RoomVm
+@using UMCTravelTour.Service.Rooms;
+@using UMCTravelTour.Service.Hotels;
+@inject IHotelService _hotelService;
+@inject IRoomService _roomService;
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Tạo phòng</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="HotelId" class="control-label"></label>
+                <select asp-for="HotelId" class ="form-control" asp-items="ViewBag.HotelId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomId" class="control-label"></label>
+                <input asp-for="RoomId" class="form-control" />
+                <span asp-validation-for="RoomId" class="text-danger"></span>
+                <span class="text-danger">@ViewBag.Error</span>
+            </div>
+            <partial name = "_AddOrEdit" />
+            <div class="form-group">
+                <input type="submit" id="myInput" value="Tạo" class="btn btn-primary" data-myValue="@ViewBag.Error" />
+                <a asp-action="Index" class="btn btn-dark">Quay lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+                var editor1 = new RichTextEditor("#Description");
+    </script>
+
+
+}

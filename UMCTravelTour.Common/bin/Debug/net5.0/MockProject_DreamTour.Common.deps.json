@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "MockProject_DreamTour.Common/1.0.0": {
+        "runtime": {
+          "MockProject_DreamTour.Common.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MockProject_DreamTour.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

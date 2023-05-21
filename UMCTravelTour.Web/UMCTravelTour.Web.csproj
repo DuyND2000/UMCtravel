@@ -1,0 +1,158 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-UMCTravelTour.Web-17FD448C-9290-488B-B27F-3CA58FDF57DF</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Admin\Views\Location\Index.cshtml~RFc7ad244.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UMCTravelTour.Common\UMCTravelTour.Common.csproj" />
+    <ProjectReference Include="..\UMCTravelTour.Core\UMCTravelTour.Core.csproj" />
+    <ProjectReference Include="..\UMCTravelTour.Service\UMCTravelTour.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\images\Restaurant\5\" />
+    <Folder Include="wwwroot\assets\images\Restaurant\1\" />
+    <Folder Include="wwwroot\assets\images\Restaurant\4\" />
+    <Folder Include="wwwroot\assets\images\Restaurant\6\" />
+    <Folder Include="wwwroot\assets\images\Restaurant\2\" />
+    <Folder Include="wwwroot\assets\images\Restaurant\3\" />
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\EmailTemplates\Create.cshtml" />
+    <None Include="Areas\Admin\Views\EmailTemplates\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\EmailTemplates\Index.cshtml" />
+    <None Include="Areas\Admin\Views\EmailTemplates\_AddOrEdit.cshtml" />
+    <None Include="Areas\Admin\Views\Rooms\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Rooms\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Rooms\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Rooms\_AddOrEdit.cshtml" />
+    <None Include="Areas\Admin\Views\StaticContents\Index.cshtml" />
+    <None Include="wwwroot\assets\game\js\animframe_polyfill.js" />
+    <None Include="wwwroot\assets\game\js\application.js" />
+    <None Include="wwwroot\assets\game\js\bind_polyfill.js" />
+    <None Include="wwwroot\assets\game\js\classlist_polyfill.js" />
+    <None Include="wwwroot\assets\game\js\game_manager.js" />
+    <None Include="wwwroot\assets\game\js\grid.js" />
+    <None Include="wwwroot\assets\game\js\html_actuator.js" />
+    <None Include="wwwroot\assets\game\js\keyboard_input_manager.js" />
+    <None Include="wwwroot\assets\game\js\local_storage_manager.js" />
+    <None Include="wwwroot\assets\game\js\tile.js" />
+    <None Include="wwwroot\assets\game\style\fonts\ClearSans-Bold-webfont.svg" />
+    <None Include="wwwroot\assets\game\style\fonts\ClearSans-Light-webfont.svg" />
+    <None Include="wwwroot\assets\game\style\fonts\ClearSans-Regular-webfont.svg" />
+    <None Include="wwwroot\assets\game\style\helpers.scss" />
+    <None Include="wwwroot\assets\game\style\main.scss" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-af.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ar.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-bg.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-bn.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-bs.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ca.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-cs.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-cy.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-da.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-de.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-el.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-en.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-es.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-et.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-fa.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-fi.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-fil.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-fj.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-fr.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ga.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-gu.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-he.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-hi.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-hr.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ht.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-hu.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-id.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-is.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-it.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ja.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-kn.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ko.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-lt.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-lv.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-mg.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-mi.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ml.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-mr.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ms.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-mt.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-mww.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-nb.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-nl.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-otq.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-pa.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-pl.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-pt-pt.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-pt.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ro.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ru.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-sk.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-sl.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-sm.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-sr-Cyrl.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-sr-Latn.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-sv.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-sw.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ta.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-te.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-th.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-tlh-Latn.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-tlh-Piqd.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-to.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-tr.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ty.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-uk.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-ur.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-vi.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-yua.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-zh-Hans.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang-zh-Hant.js" />
+    <None Include="wwwroot\richtexteditor\lang\rte-lang.js" />
+    <None Include="wwwroot\richtexteditor\plugins\all_plugins.js" />
+    <None Include="wwwroot\richtexteditor\plugins\html2pdf.js" />
+    <None Include="wwwroot\richtexteditor\plugins\imageeditor.js" />
+    <None Include="wwwroot\richtexteditor\plugins\insertcode.js" />
+    <None Include="wwwroot\richtexteditor\plugins\insertemoji.js" />
+    <None Include="wwwroot\richtexteditor\plugins\insertgallery.js" />
+    <None Include="wwwroot\richtexteditor\plugins\inserttemplate.js" />
+    <None Include="wwwroot\richtexteditor\plugins\samples\insertcode_v1.js" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\fabric.min.js" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\svg\icon-a.svg" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\svg\icon-b.svg" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\svg\icon-c.svg" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\svg\icon-d.svg" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\tui-code-snippet.min.js" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\tui-color-picker.min.js" />
+    <None Include="wwwroot\richtexteditor\plugins\tui.image-editor\tui-image-editor.min.js" />
+    <None Include="wwwroot\richtexteditor\rte.js" />
+    <None Include="wwwroot\richtexteditor\runtime\images\cpie_Color.cur" />
+    <None Include="wwwroot\richtexteditor\runtime\images\cpns_Color.cur" />
+    <None Include="wwwroot\richtexteditor\runtime\richtexteditor_preview.js" />
+  </ItemGroup>
+
+</Project>

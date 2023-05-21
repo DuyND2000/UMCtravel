@@ -1,0 +1,80 @@
+﻿@model IEnumerable<UMCTravelTour.Core.CustomIdentity.DreamTourUser>
+
+@{
+    ViewData["Title"] = "Account page";
+}
+
+<h1>Danh sách tài khoản (@ViewBag.currentRoleShow)</h1>
+<div class="row ml-1 mb-2">
+    <div class="col-8">
+        <div class="row">
+            <div col-3>
+                <a class="btn btn-outline-primary" href="@Url.Action("Index", "User", new {roleName = @Constant.Role.Administrator})">Người quản trị</a>
+            </div>
+            <div col-3>
+                <a class="btn btn-outline-primary" href="@Url.Action("Index", "User", new {roleName = @Constant.Role.Manager})">Quản lý</a>
+            </div>
+            <div col-3>
+                <a class="btn btn-outline-primary" href="@Url.Action("Index", "User", new {roleName = @Constant.Role.Employee})">Nhân viên</a>
+            </div>
+            <div col-3>
+                <a class="btn btn-outline-primary" href="@Url.Action("Index", "User", new {roleName = "Customer"})">Khách hàng</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="row">
+            <form asp-action="Index" asp-controller="User" asp-area="Admin" method="get">
+                <div class="input-group">
+                    <input id="roleName" name="roleName" value="@ViewBag.currentRoleShow" hidden /> 
+                    <input id="search" name="search" class="form-control" type="text" placeholder="Tên tài khoản. . ." />
+                    <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div style="overflow: auto; max-height: 500px !important; position: relative;">
+    <table class="table">
+        <thead class="thead-dark" style="position:sticky; top: 0;">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Họ</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">
+                    <a href="@Url.Action("Create", "User")" class="btn btn-outline-primary">
+                        <i class="fa fa-plus-square"></i> Tạo mới
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        @if (Model != null && Model.Any())
+        {
+
+            <tbody>
+                @{
+                    int d = 0;
+                }
+                @foreach (var user in Model)
+                {
+                    d++;
+                    <tr>
+                        <th scope="row">@d</th>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td>@user.PhoneNumber</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="User" asp-route-id="@user.Id">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        }
+    </table>
+</div>

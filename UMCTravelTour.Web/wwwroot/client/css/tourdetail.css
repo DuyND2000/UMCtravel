@@ -1,0 +1,282 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.book-tour {
+    margin: 0px auto 0px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+    border-radius: 5px;
+    color: #fff;
+}
+
+.background-form {
+    background-color: #113448;
+    position: sticky;
+    top: 120px;
+}
+
+h2 {
+    padding: 30px 0;
+    color: #113448;
+}
+
+.title {
+    background-color: #e8e8e8;
+    border-bottom: #ddd;
+}
+
+.content {
+    padding: 20px;
+}
+
+.content-wrapper {
+    background-color: #ecf0f5;
+}
+
+.container1 {
+    margin-left: 12rem;
+    margin-right: 12rem;
+}
+
+.main-content {
+    display: flex;
+}
+
+.main-left {
+    background-color: #ffff;
+    padding: 30px;
+    margin-bottom: 50px;
+}
+
+.cost {
+    font-size: 20px;
+    TEXT-ALIGN: center;
+    margin: 13px 0px;
+    color: burlywood;
+    font-weight: bold;
+}
+.form-group{
+    margin-bottom: 0px !important;
+    padding: 10px 0px;
+}
+.cost span {
+    font-size: 33px;
+}
+
+.form-control {
+    height: 34px;
+    font-size: 0.89rem;
+}
+
+.col-form-label {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.btn-info {
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 22px;
+}
+
+img {
+    width: 100%;
+}
+
+main {
+    background-color: #ecf0f5;
+}
+
+.container-book {
+    background-color: #ffff;
+    padding: 30px;
+}
+
+.container-book h1 {
+    text-align: center;
+    padding: 30px 0px;
+}
+
+.form-booking {
+    padding: 0px 90px;
+    color: darkcyan;
+    font-family: inherit;
+}
+
+select {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    width: 50%;
+    padding: 7px;
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 7px;
+}
+
+.btn {
+    margin: 0px auto;
+    padding: 7px 24px;
+    font-size: 15px;
+    font-family: sans-serif;
+    border: none;
+    margin-top: 16px;
+    background-color: darkcyan !important;
+}
+.twitt {
+    color: #16a7b9;
+}
+
+.face {
+    background-color: #315bd6;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px 13px;
+}
+.twitt {
+    background-color: #16a7b9;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px;
+}
+.google {
+    background-color: #c83a33;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px 8px;
+}
+
+.youtube {
+    background-color: #ae0e0e;
+    color: #fff;
+    padding: 5px 7px;
+    border-radius: 5px;
+    font-size: 20px;
+    margin-top: 2px;
+}
+.instar{
+    background-color: #ff3333;
+    color: #fff;
+    border-radius: 50%;
+    padding: 10px 11px;
+}
+.icon{
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+.icon h3{
+    font-size: 17px;
+    margin-bottom: 15px;
+}
+ul{
+    /*display: flex;*/
+    /*list-style-type: none;*/
+}
+ul li{
+    margin: 0px 5px;
+}
+.nav-tabs{
+    border-bottom: none !important;
+    width: 100%;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+   
+     border-color:none !important; 
+}
+.nav-tabs .nav-link{
+    background-color: #E6F1D8;
+    text-decoration: none;
+    color: #7A7A7A;
+    text-align: center;
+    font-size: 13px;
+    padding: 13px;
+    font-weight: bold;
+}
+.item1{
+    width: 50%;
+}
+.item2{
+    width: 47%;
+}
+.description .nav-link.active{
+    text-align: center;
+    padding: 13px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff !important;
+    background: #32B67A !important;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+    transition: 0.7s;
+}
+.post-data h2{
+    font-size: 22px;
+    color:#111 ;
+    font-weight: 500;
+    font-family: 'Montserrat' , sans-serif;
+    position: relative;
+    line-height: 1.272em;
+    margin: 40px 0 50px;
+    padding: 0px !important;
+}
+
+.post-data h2::after,.title-people::after{
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background:#32B67A;
+    margin-top: 10px;
+}
+.post-data p{
+    color: #666;
+    line-height: 1.75em;
+    font-family: 'Open Sans', sans-serif;
+    
+}
+.costs h2{
+    margin: 30px 0px 37px;
+}
+.title-people{
+    color: #111;
+    font-weight: 500;
+    font-family: 'Montserrat' , sans-serif;
+    position: relative;
+    line-height: 1.272em;
+    padding: 0 0 5px;
+    font-size: 20px;
+}
+.content1 ul{
+    display: block;
+    margin-top: 30px;
+    font-size: 15px;
+    line-height: 35px;
+    font-family: 'Poppin', sans-serif;
+    color: #666666;
+}
+.content1 ul li i{
+    color: #32B67A;
+    padding-right: 10px;
+
+}
+.carousel-item img{
+    height: 350px;
+    border: 5px solid #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgb( 0 0 0 / 50%);
+}
+.col-lg-12 h2{
+    padding: 0px !important;
+}
+.item-restaurant{
+    display:flex;
+}

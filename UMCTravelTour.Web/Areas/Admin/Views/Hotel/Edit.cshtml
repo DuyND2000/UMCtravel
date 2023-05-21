@@ -1,0 +1,38 @@
+﻿@model UMCTravelTour.ViewModel.Hotels.HotelVm
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sửa khách sạn</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="HotelId" />
+            <partial name = "_AddOrEdit" />
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-action="Index" class = "btn btn-inverse-info">Trở về</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+  @*  <script>
+        function deleteImage(item){
+            var imageOld = document.getElementById('imageShow');
+            const newImage = document.createElement('img');
+            newImage.src = "";
+            newImage.name = "ImageLink";
+            item.parentElement.replaceChild(newImage, imageOld);
+            console.log(item.parentElement)
+        }
+    </script>*@
+
+    <script>
+        var editor1 = new RichTextEditor("#Description");
+    </script>
+}  

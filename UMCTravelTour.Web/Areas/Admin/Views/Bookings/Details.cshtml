@@ -1,0 +1,81 @@
+﻿@model UMCTravelTour.ViewModel.Bookings.BookingVm
+@using UMCTravelTour.Service.Customers;
+@using UMCTravelTour.ViewModel.Customers;
+@using UMCTravelTour.Service.Tours;
+@inject ICustomerService _customerService;
+@inject ITourService _tourService;
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TourParticipantCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TourParticipantCount)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.CustomerName)           
+        </dt>
+        <dd class = "col-sm-10">
+            @_customerService.GetById(Model.CustomerId).CustomerName
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Address)           
+        </dt>
+        <dd class = "col-sm-10">
+            @_customerService.GetById(Model.CustomerId).Address
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Phone)           
+        </dt>
+        <dd class = "col-sm-10">
+            @_customerService.GetById(Model.CustomerId).Phone
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Email)           
+        </dt>
+        <dd class = "col-sm-10">
+            @_customerService.GetById(Model.CustomerId).Email
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TourId) 
+        </dt>
+        <dd class = "col-sm-10">
+            @_tourService.GetById(Model.TourId).TourId
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class = "btn btn-inverse-info">Trở lại</a>
+</div>

@@ -1,0 +1,58 @@
+﻿@model UMCTravelTour.ViewModel.Rooms.RoomVm
+<div class="form-group">
+    <label asp-for="RoomName" class="control-label"></label>
+    <br />
+    <select asp-for="RoomName" class="chooseroomtype">
+        <option value="Casual">
+            Casual
+        </option>
+        <option value="Business">
+            Business
+        </option>
+        <option value="Professional">
+            Professional
+        </option>
+        <option value="VIP">
+            VIP
+        </option>
+    </select>
+    <span asp-validation-for="RoomName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Price" class="control-label"></label>
+    <input asp-for="Price" class="form-control" />
+    <span asp-validation-for="Price" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Description" class="control-label"></label>
+    <input asp-for="Description" class="form-control" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="ImageLink" class="control-label"></label><br />
+    @* <input name="Image" type = "file" />
+        @if(Model != null && !string.IsNullOrEmpty(Model.ImageLink))
+        {
+        <img src = "~/@Model.ImageLink" style = "width: 100px" id = "imageShow" alt ="@Model.RoomName"/>
+        <button class = "btn btn-danger" type = "button" onclick = "deleteImage(this)">Remove Image</button>
+        }*@
+
+    @if (Model == null || string.IsNullOrEmpty(Model.ImageLink))
+    {
+        <img id="output" src="~/assets/images/noimage.png" width="100" height="100">
+    }
+    else
+    {
+        <img id="output" src="~/@Model.ImageLink" asp-append-version="true" width="100" height="100">
+        <input asp-for="ImageLink" hidden />
+    }<br />
+    <input name="Image" type="file" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" />
+</div>
+
+<style>
+    .chooseroomtype {
+        width: 320px;
+        height: 30px;
+        border: 1px solid #00cccd !important;
+    }
+</style>

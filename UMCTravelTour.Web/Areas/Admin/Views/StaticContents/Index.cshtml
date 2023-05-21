@@ -1,0 +1,38 @@
+﻿@model UMCTravelTour.Core.Models.StaticContent
+@using System.Reflection
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<form class="form-group" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var properties = Model.GetType().GetProperties();
+            }
+            @foreach (var property in properties)
+            {
+                <tr>
+                    <td>@property.Name</td>
+                    <td>
+                        <input type="text" name="@property.Name" value="@property.GetValue(Model)" placeholder="@property.Name"
+                        @if(property.Name=="LanguageCode")
+                        {
+                            @:readonly
+                        }
+                        >
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button class = "btn btn-primary" type="submit">Submit changes</button>
+</form>

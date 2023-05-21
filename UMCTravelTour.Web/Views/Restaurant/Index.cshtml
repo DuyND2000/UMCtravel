@@ -1,0 +1,130 @@
+﻿@model IEnumerable<UMCTravelTour.ViewModel.Restaurants.RestaurantVm>
+@{
+    ViewData["Title"] = "Nhà hàng";
+}
+
+<partial name="_HeaderPartial" />
+
+<div id="restaurants" class="cards-2">
+    <div class="container">
+        <div class="row">
+                    <div class="col-lg-12">
+                <h2>Các nhà hàng phổ biến</h2>
+                <p class="p-heading">Một nhà hàng tốt sẽ mang lại cho bạn nhiều trải nghiệm tuyệt vời hơn</p>
+            </div>   
+            </div>
+            <!-- end of col -->
+       
+        <!-- end of row -->
+        <div class="row">
+@*            <div class="res-left">
+                <div class="sidebar-wrap bg-light ftco-animate">
+                    <h3 class="heading mb-4">Find restaurant</h3>
+                    <form action="#">
+                        <div class="fields">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Destination, City">
+                            </div>
+                            <div class="form-group">
+                                <div class="select-wrap one-third">
+                                    <div><span class="ion-ios-arrow-down"></span></div>
+                                    <select name="" id="" class="form-control" placeholder="Keyword search">
+                                        <option value="">Select Location</option>
+                                        <option value="">San Francisco USA</option>
+                                        <option value="">Berlin Germany</option>
+                                        <option value="">Lodon United Kingdom</option>
+                                        <option value="">Paris Italy</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="checkin_date" class="form-control" placeholder="Date from">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="checkin_date" class="form-control" placeholder="Date to">
+                            </div>
+                            <div class="form-group">
+                                <div class="range-slider">
+                                    <span>
+                                        <input type="number" value="25000" min="0" max="120000" />	-
+                                        <input type="number" value="50000" min="0" max="120000" />
+                                    </span>
+                                    <input value="1000" min="0" max="120000" step="500" type="range" />
+                                    <input value="50000" min="0" max="120000" step="500" type="range" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Search" class="btn btn-primary btn-block">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <hr />
+                <div class="sidebar-wrap bg-light ftco-animate">
+                    <h3 class="heading mb-4">Star Rating</h3>
+                    <form method="post" class="star-rating">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="fas fa-star" style="color: #FFD700;"></i><i class="fas fa-star" style="color: #FFD700;"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="fas fa-star" style="color: #FFD700;"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>*@
+            <div class="col-lg-12">
+                @foreach(var item in Model)
+                {        <div class="card">
+                            <div class="card-image">
+                                <img class="img-fluid" src="~/@item.ImageLink" alt="alternative">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">@item.RestaurantName</h3>
+                                <p>Chúng tôi rất mong được phục vụ quý khách</p>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <span><i class="fas fa-map"></i> Tốt nhất cho bạn</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a style="float: right;" class="btn-solid-reg" href="~/Restaurant/Detail?id=@item.RestaurantId">VIEW</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                @if (Model.Count() < ViewBag.TotalRestaurant){
+                    int dem = Model.Count() + 6;
+                    <a href="@Url.Action("Index", "Restaurant", new {showMore = dem})">Xem thêm</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

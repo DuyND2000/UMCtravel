@@ -1,0 +1,33 @@
+﻿@model UMCTravelTour.Core.Models.EmailTemplate
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<h1>Create Email Template</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" enctype = "multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <partial name="_AddOrEdit"/>
+            <div class="form-group">
+                 <input type="submit" value="Tạo" class="btn btn-primary" />
+                <a asp-action="Index" class = "btn btn-inverse-info">Trở về</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        var editor1 = new RichTextEditor("#Body");
+        
+    </script>
+
+}

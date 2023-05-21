@@ -1,0 +1,27 @@
+﻿@model UMCTravelTour.ViewModel.EmailTemplates.EmailTemplateVm
+
+             <div class="form-group">
+                <label asp-for="EmailTilte" class="control-label"></label>
+                <input asp-for="EmailTilte" class="form-control" />
+                <span asp-validation-for="EmailTilte" class="text-danger"></span>
+            </div>         
+            <div class="form-group">
+                <label asp-for="CC" class="control-label"></label>
+                <input asp-for="CC" class="form-control" />
+                <span asp-validation-for="CC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BCC" class="control-label"></label>
+                <input asp-for="BCC" class="form-control" />
+                <span asp-validation-for="BCC" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Object" class="control-label"></label>
+                <input asp-for="Object" class="form-control" />
+                <span asp-validation-for="Object" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+             <label asp-for="Body" class="control-label"></label>
+             <textarea asp-for="Body" class="form-control"></textarea>
+             <span asp-validation-for="Body" class="text-danger"></span>
+            </div>

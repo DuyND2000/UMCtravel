@@ -1,0 +1,214 @@
+﻿@model UMCTravelTour.ViewModel.Bookings.BookingVm
+@using UMCTravelTour.Service.Customers;
+@using UMCTravelTour.Service.Rooms
+@using UMCTravelTour.ViewModel.Customers;
+@using UMCTravelTour.Service.Tours;
+@inject ICustomerService _customerService;
+@inject ITourService _tourService;
+@inject IRoomService _roomService;
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>Sửa đặt chuyến</h1>
+
+<h4>Đơn đặt chuyến</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BookingId" />
+            <div class="form-group">
+                <label asp-for="TourId" class="control-label">Tên chuyến đi</label>
+                <select asp-for="TourId" class="form-control" asp-items="ViewBag.TourId" id="select-tour"></select>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.CustomerName"></label>
+                        <input type="text" asp-for="@Model.CustomerId" value="@Model.CustomerId" hidden/>
+                        <input type="text" asp-for="@Model.Customer.CustomerId" value="@Model.CustomerId" hidden/>
+                        <input type="text" asp-for="@Model.Customer.CustomerName" value="@_customerService.GetById(Model.CustomerId).CustomerName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.Phone"></label>
+                        <input type="tel" asp-for="@Model.Customer.Phone" value="@_customerService.GetById(Model.CustomerId).Phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TourParticipantCount" class="control-label"></label>
+                        <input asp-for="TourParticipantCount" class="form-control" />
+                        <span asp-validation-for="TourParticipantCount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="RoomId" class="control-label"></label>
+                        <select asp-for="RoomId" id="select-room" class="form-control"></select>
+                        <span asp-validation-for="RoomId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.Address"></label>
+                        <input type="text" asp-for="@Model.Customer.Address" value="@_customerService.GetById(Model.CustomerId).Address" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="" asp-for="@Model.Customer.Email"></label>
+                        <input type="text" asp-for="@Model.Customer.Email" value="@_customerService.GetById(Model.CustomerId).Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Note" class="control-label"></label>
+                        <input asp-for="Note" class="form-control" />
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label"></label>
+                        <select style="border: 1px solid #00cccd;" name="Status" class="form-control">
+                            @if (Model != null && !string.IsNullOrEmpty(Model.Status))
+                            {
+                                @if (Model.Status != Constant.StatusBooking.Completed && Model.Status != Constant.StatusBooking.Cancelled)
+                                {
+                                    var properties = typeof(Constant.StatusBooking).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy).ToList();
+
+                                    foreach (var item in properties)
+                                    {
+
+                                        var value = item.GetValue(item.Name).ToString();
+
+                                        if (Model.Status == value)
+                                        {
+                                            <option value="@value" selected>@value</option>
+                                        }
+                                        else
+                                        {
+
+                                            @if (Model.Status == Constant.StatusBooking.Pending || Model.StartDate > DateTime.Now)
+                                            {
+                                                @if ((value != Constant.StatusBooking.Cancelled || value != Constant.StatusBooking.Completed) && value != Constant.StatusBooking.Pending)
+                                                {
+                                                    <option value="@value">@value</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @if (value != Constant.StatusBooking.Cancelled && value != Constant.StatusBooking.Pending)
+                                                {
+                                                    <option value="@value">@value</option>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <option value="@Model.Status" selected>@Model.Status</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @if (Model.Status != Constant.StatusBooking.Completed && Model.Status != Constant.StatusBooking.Cancelled)
+                {
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                }
+                <a asp-action="Index" class="btn btn-inverse-info">Trở lại</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/JavaScript">
+
+        $(document).ready(function () {
+            GetRoomList();
+        });
+
+    </script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
+
+<script>
+    
+    @{
+        var tourList = _tourService.GetAll().ToList();
+        var roomList = _roomService.GetAll().ToList();
+
+    }
+
+            var tourJsList = [
+    @{
+        for (int i = 0; i < tourList.Count; i++)
+        {
+            @:{ tourId: @tourList[i].TourId,
+            @:hotelId: @tourList[i].HotelId
+            @:}
+            @if (i < tourList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+                ];
+
+    var roomJsList = [
+    @{
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            @:{ hotelId: @roomList[i].HotelId,
+            @:roomId: @roomList[i].RoomId,
+            @:roomName: "@roomList[i].RoomName",
+            @:price: @roomList[i].Price.ToString().Replace(",",".")
+            @:}
+            @if (i < roomList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+                ];
+
+
+    function GetHotelId() {
+        debugger;
+        var selected = document.getElementById("select-tour").value;
+        for (let i = 0; i < tourJsList.length; i++) {
+            if (tourJsList[i].tourId == selected)
+                return tourJsList[i].hotelId;
+        }
+        return NaN;
+    }
+
+    function GetRoomList() {
+        debugger;
+        var htmlList = '';
+        var hotelId = GetHotelId();
+        for (let i = 0; i < roomJsList.length; i++) {
+            if (roomJsList[i].hotelId == hotelId) {
+                if (@Model.RoomId == roomJsList[i].roomId) {
+                    htmlList += `<option value="${roomJsList[i].roomId}" selected >${roomJsList[i].roomName}</option>`;
+                }
+
+                else {
+                    htmlList += `<option value="${roomJsList[i].roomId}">${roomJsList[i].roomName}</option>`;
+                }
+            }
+
+        }
+
+        $("#select-room").html(htmlList);
+    }
+</script>

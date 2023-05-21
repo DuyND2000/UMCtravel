@@ -1,0 +1,34 @@
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.ViewModel.deps.json
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.ViewModel.dll
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.ViewModel.pdb
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Common.dll
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Core.dll
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Common.pdb
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Core.pdb
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.csproj.AssemblyReference.cache
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.AssemblyInfoInputs.cache
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.AssemblyInfo.cs
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.csproj.CoreCompileInputs.cache
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.csproj.CopyComplete
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.dll
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\refint\UMCTravelTour.ViewModel.dll
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.pdb
+C:\Users\Ssun4\Documents\DoAn\DreamTour\UMCTravelTour.ViewModel\obj\Debug\net5.0\ref\UMCTravelTour.ViewModel.dll
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.ViewModel.deps.json
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.ViewModel.dll
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.ViewModel.pdb
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Common.dll
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Core.dll
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Common.pdb
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\bin\Debug\net5.0\UMCTravelTour.Core.pdb
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.csproj.AssemblyReference.cache
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.AssemblyInfoInputs.cache
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.AssemblyInfo.cs
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.csproj.CoreCompileInputs.cache
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.csproj.CopyComplete
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.dll
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\refint\UMCTravelTour.ViewModel.dll
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\UMCTravelTour.ViewModel.pdb
+C:\Users\Ssun4\Desktop\đồ án\UMCTourTravel\UMCTravelTour.ViewModel\obj\Debug\net5.0\ref\UMCTravelTour.ViewModel.dll

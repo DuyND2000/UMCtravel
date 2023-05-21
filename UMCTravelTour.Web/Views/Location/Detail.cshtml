@@ -1,0 +1,71 @@
+﻿@using UMCTravelTour.ViewModel.Locations
+@model LocationVm
+
+@{
+    ViewData["Title"] = ViewBag.Location;
+}
+@if (!string.IsNullOrEmpty(Model.ImageLink))
+{
+    <style>
+        #header {
+            background-image: url('/@Model.ImageLink');
+            width:100%;
+            height: 100%;
+        }
+    </style>
+}
+<partial name="_HeaderPartial" />
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ftco-animate">
+                <h2 class="mb-3 mt-5">@Model.LocationName</h2>
+                <div>
+                    @Html.Raw(Model.Description)
+                </div>
+
+                <div class="pt-5 mt-5">
+                    <h3 class="mb-5">Đề xuất khách sạn và nhà hàng gần đây</h3>
+                    <div style="display: flex;">
+                        @foreach (var item in ViewBag.HotelList)
+                        {
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="/@item.ImageLink" alt="Card image cap" height="150" width="250">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="height: 60px;">@item.HotelName</h5>
+                                    <a href="@Url.Action("Detail", "Hotel", new {hotelId = item.HotelId})" class="btn btn-primary float-right text-decoration-none">Xem</a>
+                                </div>
+                            </div>
+                        }
+                        @foreach (var item in ViewBag.RestaurantList)
+                        {
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="/@item.ImageLink" alt="Card image cap" height="150" width="250">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="height: 60px;">@item.RestaurantName</h5>
+                                    <a href="@Url.Action("Detail", "Restaurant", new {Id = item.RestaurantId})" class="btn btn-primary float-right text-decoration-none">Xem</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 sidebar ftco-animate">
+                <div class="sidebar-box ftco-animate">
+                    <h3 class="mb-3 mt-5">Điểm đến được đề xuất</h3>
+                    @foreach (var item in ViewBag.LocationList)
+                    {
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="/@item.ImageLink" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.LocationName</h5>
+                                <a href="@Url.Action("Detail", "Location", new {locationId = item.LocationId})" class="btn btn-primary float-right text-decoration-none">Xem</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

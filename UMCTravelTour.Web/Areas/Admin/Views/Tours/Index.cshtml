@@ -1,0 +1,163 @@
+﻿@using UMCTravelTour.Common.Constants;
+@using UMCTravelTour.ViewModel.Pages;
+@model PagedVm<UMCTravelTour.ViewModel.Tours.TourVm>
+
+@{
+    ViewData["Title"] = "Index";
+
+    var keyword = "";
+    if (ViewBag.FilterPaging.Keyword != null) keyword = ViewBag.FilterPaging.Keyword as string;
+    var sortBy = ViewBag.FilterPaging.SortBy;
+    var typeOfSort = ViewBag.FilterPaging.TypeOfSort;
+}
+
+<h1>Danh sách Tour</h1>
+<form method="post">
+    <div class="input-group mb-3">
+        <input style="border: 1px solid #00cccd;" type="text" class="form-control col-6" value="@keyword" name="Keyword" placeholder="Search ...">
+        <select style="border: 1px solid #00cccd;" name="sortBy" class="form-control col-3">
+            @if (sortBy == Constant.SortBy.Name)
+            {
+                <option value="Name" selected>Sắp sếp theo tên</option>
+                <option value="ModifiedOn">Sắp sếp bằng ngày tạo</option>
+            }
+            else
+            {
+                <option value="ModifiedOn" selected>Sắp xếp bằng ngày tạo</option>
+                <option value="Name">Sắp xếp theo tên</option>
+            }
+        </select>
+        <select style="border: 1px solid #00cccd;" name="typeOfSort" class="form-control col-2">
+            @if (typeOfSort == Constant.Sort.ASC)
+            {
+                <option value="ASC" selected>Tăng dần</option>
+                <option value="DESC">Giảm dần</option>
+            }
+            else
+            {
+                <option value="DESC" selected>Giảm dần</option>
+                <option value="ASC">Tăng dần</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-success">Tìm</button>
+    </div>
+</form>
+<form method="post" enctype="multipart/form-data">
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="20%">
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.TourName)
+                </th>
+                <th width="10%">
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.ImageLink)
+                </th>
+                <th width="10%">
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.Duration)
+                </th>
+                <th width="10%">
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.TotalPrice)
+                </th>
+                <th width="30%">
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.ShortDescription)
+                </th>
+                <th width="10%">
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.Status)
+                </th>
+                <th class="center" width="10%">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TourName)
+                    </td>
+                    <td>
+                        <img src="~/@item.ImageLink" width="100" height="100">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>
+                    <td>
+                        @if (@item.ShortDescription.Length > 50)
+                        {
+                            @Html.Raw(@item.ShortDescription.Substring(0, 50) + "...")
+                        }
+                        else
+                        {
+                            @Html.Raw(@item.ShortDescription)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td class="center">
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.TourId" class="btn btn-outline-success"><i class="fa fa-edit"></i></a>
+                            <form method="post">
+                                <button type="submit" asp-action="Delete" asp-route-id="@item.TourId" class="btn btn-outline-warning"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @{
+                string url = "#";
+                if (Model.PageIndex > 1)
+                {
+                    url = $"/admin/Tours/index?keyword={keyword}&pageIndex={Model.PageIndex - 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" href="@url" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @if (Model.TotalPage <= 5)
+            {
+                for (int i = 1; i <= Model.TotalPage; i++)
+                {
+                    url = $"/admin/Tours/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            else
+            {
+                int i = Model.PageIndex > 2 ? Model.PageIndex - 2 : 1;
+                int j = Model.PageIndex + 2 > Model.TotalPage ? Model.TotalPage : Model.PageIndex + 2;
+                for (; i <= j; i++)
+                {
+                    url = $"/admin/Tours/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            <li class="page-item">
+                @{
+                    if (Model.PageIndex < Model.TotalPage)
+                    {
+                        url = $"/admin/Tours/index?keyword={keyword}&pageIndex={Model.PageIndex + 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    }
+                }
+                <a class="page-link" href="@url" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

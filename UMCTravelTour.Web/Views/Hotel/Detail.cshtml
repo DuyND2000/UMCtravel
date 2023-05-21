@@ -1,0 +1,143 @@
+﻿@using UMCTravelTour.Service.Rooms;
+@using UMCTravelTour.Service.Hotels;
+@model UMCTravelTour.ViewModel.Hotels.HotelVm;
+@{
+    ViewData["Title"] = ViewBag.HotelName;
+}
+@inject IRoomService roomService
+@inject IHotelService hotelService
+@{
+    var rooms = await roomService.GetRoomByHotelIdAsync(Model.HotelId);
+    var hotelRelateds = await hotelService.GetByLocationIdAsync(Model.HotelId,Model.LocationId, size: 10);
+
+}
+
+@if (!string.IsNullOrEmpty(Model.ImageLink))
+{
+    <style>
+        #header{
+            background-image: url('/@Model.ImageLink');
+        }
+    </style>
+}
+<partial name="_HeaderPartial" />
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-md-12 ftco-animate">
+                        <div class="single-slider owl-carousel">
+                            <div class="item">
+                                <div class="hotel-img" style="background-image: url(/client/images/hotel-2.jpg);"></div>
+                            </div>
+                            <div class="item">
+                                <div class="hotel-img" style="background-image: url(/client/images/hotel-3.jpg);"></div>
+                            </div>
+                            <div class="item">
+                                <div class="hotel-img" style="background-image: url(/client/images/hotel-4.jpg);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 hotel-single mt-4 mb-5 ftco-animate">
+                        <span>Những khách sạn và phòng nghỉ tốt nhất</span>
+                        <h2>@Model.HotelName</h2>
+                        <p class="rate mb-5">
+                            <span class="loc"><a href="#"><i class="icon-map"></i> @Model.Address</a></span>
+                            <span class="star">
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="icon-star-o"></i>
+                                8 Rating
+                            </span>
+                        </p>
+                        <img src = "~/@Model.ImageLink" alt ="@Model.HotelName"/>
+                        <br /><br />
+                        <p>@Html.Raw(Model.Description)</p>
+                    </div>
+                    <div class="col-md-12 hotel-single ftco-animate mb-5 mt-4">
+                        <h4 class="mb-4">Our Rooms</h4>
+                        <div class="row">
+                            @foreach (var room in rooms)
+                           {
+                                <div class="col-md-4">
+                                <div class="destination">
+                                    <img class="img img-2"  src ="~/@room.ImageLink" alt="@room.RoomName"/>
+                                    <div class="text p-3">
+                                        <div class="d-flex">
+                                            <div class="one">
+                                                <h3>@room.RoomName</h3>
+                                                <p class="rate">
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="icon-star-o"></i>
+                                                    <span>8 Rating</span>
+                                                </p>
+                                            </div>
+                                            <div class="two">
+                                                <span class="price per-price">@room.Price<br><small>/day</small></span>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <hr>
+                                        <p class="bottom-area d-flex">
+                                            <span><i class="icon-map-o"></i> Miami, Fl</span>
+                                            <span class="ml-auto"><a href="#">Đặt ngay</a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                           }
+                        </div>
+                    </div>
+                    <div class="col-md-12 hotel-single ftco-animate mb-5 mt-5">
+                        <h4 class="mb-4">Các khách sạn tương tự</h4>
+                        <div class="row">
+                            @foreach (var hotel in hotelRelateds)
+                           {
+                                <div class="col-md-4">
+                                <div class="destination">
+                                    <img src= "~/@hotel.ImageLink" alt ="@hotel.HotelName"/>
+                                    <div class="text p-3">
+                                        <div class="d-flex">
+                                            <div class="one">
+                                                <h3>@hotel.HotelName</h3>
+                                                 <div>@hotel.Address</div>
+                                                <p class="rate">
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                    <i class="icon-star-o"></i>
+                                                    <span>8 Rating</span>
+                                                </p>
+                                            </div>
+                                            
+                                        </div>
+                                        <p>@hotel.ShortDescription</p>
+                                        <hr>
+                                        <div class="row">
+                                        <div class="col-md-6">
+                                            <span><i class="fas fa-map"></i> @hotel.RoomPrice</span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a style="float: right;" class="btn-solid-reg" href="/Hotel/Detail?hotelId=@hotel.HotelId">Xem</a>
+                                        </div>
+                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                           }
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</section>

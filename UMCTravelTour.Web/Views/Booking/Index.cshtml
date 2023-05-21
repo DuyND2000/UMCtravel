@@ -1,0 +1,73 @@
+﻿@using UMCTravelTour.Service.Customers
+@model IEnumerable<UMCTravelTour.ViewModel.Bookings.BookingVm>
+@inject ICustomerService _customerService;
+@{
+    ViewData["Title"] = "Booking của bạn";
+}
+<partial name="_HeaderPartial" />
+<div class="container">
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(x=>x.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.Status)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.ExpectedPrice)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(x=>x.TourId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(x=>x.TotalPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.StartDate.ToShortDateString()
+                </td>
+                <td>
+                    @item.EndDate.ToShortDateString()
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.TourParticipantCount)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                @*<td>
+                    @_customerService.GetById(item.CustomerId).CustomerName <br />
+                    <small>ID: @Html.DisplayFor(modelItem => item.CustomerId)</small>
+                </td>*@
+                @*<td>
+                    @item.ExpectedPrice.ToString("N0")
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.TourId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                </td>
+                <!-- Example single danger button -->
+
+            <td class="center">
+                    <div class="btn-group">
+                        <a asp-action="Tracking" asp-route-id="@item.BookingId" class="btn btn-outline-success"><i class="fa fa-edit"></i></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>

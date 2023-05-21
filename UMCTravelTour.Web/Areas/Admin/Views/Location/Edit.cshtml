@@ -1,0 +1,28 @@
+﻿@model UMCTravelTour.ViewModel.Locations.LocationVm
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>Sửa điểm đến</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LocationId" />
+            <partial name = "_AddOrEdit" />
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a asp-action="Index" class = "btn btn-inverse-info">Trở về</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        var editor1 = new RichTextEditor("#Description");
+    </script>
+
+}

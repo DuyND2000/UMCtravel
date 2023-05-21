@@ -1,0 +1,134 @@
+﻿@model PagedVm<UMCTravelTour.ViewModel.Locations.LocationVm>
+
+@{
+    ViewData["Title"] = "Index";
+    var keyword = "";
+    if (ViewBag.FilterPaging.Keyword != null) keyword = ViewBag.FilterPaging.Keyword as string;
+    var sortBy = ViewBag.FilterPaging.SortBy;
+    var typeOfSort = ViewBag.FilterPaging.TypeOfSort;
+}
+
+<h1>Danh sách điểm đến</h1>
+<form method="post">
+    <div class="input-group mb-3">
+        <input style="border: 1px solid #00cccd;" type="text" class="form-control col-6" value="@keyword" name="Keyword" placeholder="Tìm kiếm ...">
+        <select style="border: 1px solid #00cccd;" name="sortBy" class="form-control col-3">
+            @if (sortBy == Constant.SortBy.Name)
+            {
+                <option value="Name" selected>Sắp theo tên</option>
+            }
+            else
+            {
+                <option value="Name">Sắp xếp theo tên</option>
+            }
+        </select>
+        <select style="border: 1px solid #00cccd;" name="typeOfSort" class="form-control col-2">
+            @if (typeOfSort == Constant.Sort.ASC)
+            {
+                <option value="ASC" selected>Tăng</option>
+                <option value="DESC">Giảm</option>
+            }
+            else
+            {
+                <option value="DESC" selected>Giảm</option>
+                <option value="ASC">Tăng</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-success">Tìm</button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.LocationName)
+
+            <th>
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.ImageLink)
+
+            </th>
+            <th>
+                    @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.LastModifiedOn)
+
+            </th>
+            <th class="center pb-0" width="10%">
+                <a asp-action="Create" class="btn btn-primary"><i class="fa fa-plus-square-o menu-icon"></i> Thêm mới</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @item.LocationName
+                </td>
+                <td>
+                    <img style="width:50px" src="~/@item.ImageLink" alt="Alternate Text" />
+                </td>
+                <td>
+                    @item.LastModifiedOn
+                </td>
+                <td class="center">
+                    <div class="btn-group">
+                        <a href="@Url.Action("Create", "Tours", new {locationId = item.LocationId})" class="btn btn-info">Tạo tour</a>
+                        <a asp-action="Edit" asp-route-id="@item.LocationId" class="btn btn-outline-success"><i class="fa fa-edit"></i></a>
+                        <form method="post">
+                            <button type="submit" asp-action="Delete" asp-route-id="@item.LocationId" class="btn btn-outline-warning"><i class="fa fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @{
+                string url = "#";
+                if (Model.PageIndex > 1)
+                {
+                    url = $"/admin/Location/index?keyword={keyword}&pageIndex={Model.PageIndex - 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" href="@url" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @if (Model.TotalPage <= 5)
+            {
+                for (int i = 1; i <= Model.TotalPage; i++)
+                {
+                    url = $"/admin/Location/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            else
+            {
+                int i = Model.PageIndex > 2 ? Model.PageIndex - 2 : 1;
+                for (; i <= Model.PageIndex + 2; i++)
+                {
+                    url = $"/admin/Location/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            <li class="page-item">
+                @{
+                    if (Model.PageIndex < Model.TotalPage)
+                    {
+                        url = $"/admin/Location/index?keyword={keyword}&pageIndex={Model.PageIndex + 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    }
+                }
+                <a class="page-link" href="@url" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

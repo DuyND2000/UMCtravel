@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UMCTravelTour.Common\UMCTravelTour.Common.csproj" />
+    <ProjectReference Include="..\UMCTravelTour.Core\UMCTravelTour.Core.csproj" />
+    <ProjectReference Include="..\UMCTravelTour.ViewModel\UMCTravelTour.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

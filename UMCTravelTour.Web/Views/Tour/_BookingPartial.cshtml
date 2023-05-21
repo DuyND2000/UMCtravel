@@ -1,0 +1,241 @@
+﻿@model UMCTravelTour.ViewModel.Bookings.BookingVm
+@using UMCTravelTour.Core.CustomIdentity;
+@using Microsoft.AspNetCore.Identity;
+@using UMCTravelTour.Service.Rooms
+@inject UserManager<DreamTourUser> userManager;
+@{
+    DreamTourUser customer = null;
+    if (!string.IsNullOrEmpty(User.Identity.Name))
+    {
+        customer = await userManager.FindByNameAsync(User.Identity.Name);
+        if (userManager.GetRolesAsync(customer).Result.Count() > 0)
+        {
+            customer = null;
+        }
+    }
+}
+@inject IRoomService _roomService;
+@{
+    var roomList = _roomService.GetAll().Where(x => x.HotelId == ViewBag.Tour.HotelId).ToList();
+}
+<script>
+        var regex = "@ViewBag.Tour.Duration".match(/\d+/);
+        if(regex==null)
+            var tourDuration = 0;
+        else
+            var tourDuration = parseInt(regex[0],10);
+
+        var roomJsList = [
+    @{
+        for (int i = 0; i < roomList.Count; i++)
+        {
+            @:{roomName: "@roomList[i].RoomName",
+            @:roomId: @roomList[i].RoomId,
+            @:price: convertNumber(@roomList[i].Price)
+            @:}
+            @if (i < roomList.Count - 1)
+            {
+                @:,
+            }
+        }
+    }
+            ];
+            function convertNumber(number){
+                return number.toString().replace(',','.');
+            }
+            function GetRoomList()
+            {
+                var htmlList = "<option value='-1'>--chọn loại phòng--</option>";
+                for(let i=0;i<roomJsList.length;i++)
+                {
+                    htmlList+=`<option value="${roomJsList[i].roomId}">${roomJsList[i].roomName}</option>`;
+                }
+                console.log(htmlList);
+                document.getElementById("select-room").innerHTML = htmlList;
+            }
+            function FindRoomPrice(roomId) {
+            for (let i = 0; i < roomJsList.length; i++) {
+                if (roomId == roomJsList[i].roomId)
+                    return roomJsList[i].price;
+            }
+            return 0;
+    }
+    function ChangeParticipantCount() {
+        //$('#ExpectedPrice').val(parseInt($('#appendParticipantCount').val()) * parseFloat($('#Price').val()));
+        var price = 0;
+        var tourParticipant = +document.getElementById("appendParticipantCount").value;
+        console.log(tourParticipant);
+        var roomPrice = FindRoomPrice(+document.getElementById("select-room").value);
+        console.log(roomPrice);
+        price = tourParticipant * roomPrice * tourDuration * 1.05;
+        
+        if (isNaN(price))
+            price = "Vui lòng nhập đầy đủ thông tin";
+        document.getElementById("ExpectedPrice").value = price;
+        return price;
+    }
+</script>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Vui lòng nhập thông tin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formBooking" asp-controller="Tour" asp-action="BookTour" class="book-tour" style="color:black">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="content">
+                        <input asp-for="TourId" value="@ViewBag.Tour.TourId" hidden />
+                        <input asp-for="IsValidBooking" type="hidden" value="@ViewBag.isValidBooking" />
+                        <input value="@ViewBag.Tour.TotalPrice" id="Price" type="hidden" />
+                         @if (customer != null)
+                            {
+                                <div class="row">
+                          
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.CustomerName"></label>
+                                    <input type="text" asp-for="Customer.CustomerName" value="@customer.LastName @customer.FirstName" placeholder="Họ và tên" class="form-control">
+                                    <span asp-validation-for="Customer.CustomerName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.Phone"></label>
+                                    <input type="tel" asp-for="Customer.Phone" value="@customer.PhoneNumber" placeholder="Số điện thoại" class="form-control">
+                                    <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.Address"></label>
+                                    <input type="text" asp-for="Customer.Address" placeholder="Địa chỉ" class="form-control">
+                                    <span asp-validation-for="Customer.Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.Email"></label>
+                                    <input type="text" asp-for="Customer.Email" value="@customer.Email" placeholder="Email" class="form-control">
+                                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="StartDate"></label>
+                                    <input type="date" id="appendStartDate" class="form-control" name="StartDate">
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="TourParticipantCount"></label>
+                                    <input type="number" class="form-control" id="appendParticipantCount" name="TourParticipantCount" min="1" onchange="ChangeParticipantCount()">
+                                    <span asp-validation-for="TourParticipantCount" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            </div>
+                        }
+                        else
+                        {
+                                 <div class="row">
+                          
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.CustomerName"></label>
+                                    <input type="text" asp-for="Customer.CustomerName" placeholder="Họ và tên" class="form-control">
+                                    <span asp-validation-for="Customer.CustomerName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.Phone"></label>
+                                    <input type="tel" asp-for="Customer.Phone" placeholder="Số điện thoại" class="form-control">
+                                    <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.Address"></label>
+                                    <input type="text" asp-for="Customer.Address" placeholder="Địa chỉ" class="form-control">
+                                    <span asp-validation-for="Customer.Address" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Customer.Email"></label>
+                                    <input type="text" asp-for="Customer.Email" placeholder="Email" class="form-control">
+                                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="StartDate"></label>
+                                    <input type="date" id="appendStartDate" class="form-control" name="StartDate">
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="TourParticipantCount"></label>
+                                    <input type="number" class="form-control" id="appendParticipantCount" name="TourParticipantCount" min="1" onchange="ChangeParticipantCount()">
+                                    <span asp-validation-for="TourParticipantCount" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Loại phòng</label>
+                                    <select id="select-room" class="form-control" onchange="ChangeParticipantCount()" name="RoomId"></select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ExpectedPrice"></label>
+                                    <input type="number" class="form-control" asp-for="ExpectedPrice" readonly>
+                                    <span asp-validation-for="ExpectedPrice" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="" class="" asp-for="Note"></label>
+                                    <textarea asp-for="Note" id="" cols="10" rows="3" class="text-danger"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <input type="button" onclick="BookTour('formBooking')" value="Đặt tour" class="btn btn-block btn-info">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    GetRoomList();
+</script>

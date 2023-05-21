@@ -1,0 +1,151 @@
+﻿@using UMCTravelTour.Common.Constants;
+@using UMCTravelTour.ViewModel.Pages;
+@model PagedVm<UMCTravelTour.ViewModel.EmailTemplates.EmailTemplateVm>
+
+@{
+    ViewData["Title"] = "Index";
+     var keyword = "";
+    if (ViewBag.FilterPaging.Keyword != null) keyword = ViewBag.FilterPaging.Keyword as string;
+    var sortBy = ViewBag.FilterPaging.SortBy;
+    var typeOfSort = ViewBag.FilterPaging.TypeOfSort;
+}
+
+<h1>Quản lý email</h1>
+<form method="post">
+    <div class="input-group mb-3">
+        <input style="border: 1px solid #00cccd;" type="text" class="form-control col-6" value="@keyword" name="Keyword" placeholder="Tìm kiếm ...">
+        <select style="border: 1px solid #00cccd;" name="sortBy" class="form-control col-3">
+            @if (sortBy == Constant.SortBy.Name)
+            {
+                <option value="Name" selected>Sắp theo tên</option>
+                <option value="ModifiedOn">Sắp theo ngày tạo</option>
+            }
+            else
+            {
+                <option value="ModifiedOn" selected>Sắp theo ngày tạo</option>
+                <option value="Name">Sắp theo tên</option>
+            }
+        </select>
+        <select style="border: 1px solid #00cccd;" name="typeOfSort" class="form-control col-2">
+            @if (typeOfSort == Constant.Sort.ASC)
+            {
+                <option value="ASC" selected>Tăng</option>
+                <option value="DESC">Giảm</option>
+            }
+            else
+            {
+                <option value="DESC" selected>Giảm</option>
+                <option value="ASC">Tăng</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-success">Tìm</button>
+    </div>
+</form>
+
+<form method="post">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.EmailTilte)           
+            </th>         
+            <th>
+               @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.CC)          
+
+    
+            </th>
+            <th>
+               @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.BCC)          
+            </th>
+            <th>
+               @Html.DisplayNameFor(x=>x.Data.GetEnumerator().Current.Object)          
+            </th>
+             <th class="center pb-0" width="10%">
+                <a asp-action="Create" class="btn btn-primary"><i class="fa fa-plus-square-o menu-icon"></i> Mới</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Data) {
+        <tr>
+            <td>
+                @item.EmailTilte
+            </td>
+            <td>
+                  <details>
+                        <summary>CC</summary>
+                        <p>@item.CC</p>
+                   </details>
+                
+            </td>
+            <td>
+                <details>
+                        <summary>BCC</summary>
+                        <p>@item.BCC</p>
+                   </details>
+            </td>
+            <td>
+                @item.Object
+            </td>
+             <td class="center">
+                <div class="btn-group">
+
+                    <a asp-action="Edit" asp-route-id="@item.EmailId" class="btn btn-success"><i class="fa fa-edit"></i></a>
+                    <button type="submit"  asp-action="Delete" asp-route-id="@item.EmailId"  class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                  </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</form>
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @{
+                string url = "#";
+                if (Model.PageIndex > 1)
+                {
+                    url = $"/admin/EmailTemplates/index?keyword={keyword}&pageIndex={Model.PageIndex - 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                }
+            }
+            <li class="page-item">
+                <a class="page-link" href="@url" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @if (Model.TotalPage <= 6)
+            {
+                for (int i = 1; i <= Model.TotalPage; i++)
+                {
+                    url = $"/admin/EmailTemplates/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            else
+            {
+                int i = Model.PageIndex > 2 ? Model.PageIndex - 2 : 1;
+                  int j = Model.PageIndex + 2 > Model.TotalPage ? Model.TotalPage : Model.PageIndex + 2;
+                for (; i <= j; i++)
+                {
+                    url = $"/admin/EmailTemplates/index?keyword={keyword}&pageIndex={i}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    var active = Model.PageIndex == i ? "active" : "";
+                    <li class="page-item @active"><a class="page-link" href="@url">@i</a></li>
+                }
+            }
+            <li class="page-item">
+                @{
+                    if (Model.PageIndex < Model.TotalPage)
+                    {
+                        url = $"/admin/EmailTemplates/index?keyword={keyword}&pageIndex={Model.PageIndex + 1}&typeOfSort={typeOfSort}&sortBy={sortBy}";
+                    }
+                }
+                <a class="page-link" href="@url" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

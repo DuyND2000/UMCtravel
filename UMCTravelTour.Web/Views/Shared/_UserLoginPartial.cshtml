@@ -1,0 +1,21 @@
+﻿@model LoginModel
+
+<div class="d-flex flex-column m-3">
+    <form id="UserLoginForm" asp-controller="UserAuth" asp-action="Login">
+        <input type="hidden" asp-for="LoginValid" />
+        <div class="form-group">
+            <input class="form-control" asp-for="Email" placeholder="Email của bạn..." />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input class="form-control" asp-for="Password" placeholder="Mật khẩu của bạn..." />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="RememberMe" />
+            <label class="mb-0" asp-for="RememberMe" style="position: relative; bottom: -3px;">Nhớ mật khẩu</label>
+        </div>
+        <button id="login" name="login" type="button" class="btn btn-info btn-block btn-round">Đăng nhập</button>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    </form>
+</div>

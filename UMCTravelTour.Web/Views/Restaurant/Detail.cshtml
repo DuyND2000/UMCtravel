@@ -1,0 +1,93 @@
+﻿@model UMCTravelTour.ViewModel.Restaurants.RestaurantVm;
+@{
+    ViewData["Title"] = ViewBag.RestaurantName;
+}
+@if (!string.IsNullOrEmpty(Model.ImageLink))
+{
+    <style>
+        #header {
+            background-image: url('/@Model.ImageLink');
+        }
+    </style>
+}
+<partial name="_HeaderPartial" />
+
+<section class="ftco-section ftco-degree-bg wrapper-restaurent">
+    <div class="container container-restaurent" style="padding: 20px 30px">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-md-12 ftco-animate">
+                        <div class="single-slider owl-carousel">
+                            <div class="item">
+                                <div class="hotel-img" style="background-image: url(images/hotel-2.jpg);"></div>
+                            </div>
+                            <div class="item">
+                                <div class="hotel-img" style="background-image: url(images/hotel-3.jpg);"></div>
+                            </div>
+                            <div class="item">
+                                <div class="hotel-img" style="background-image: url(images/hotel-4.jpg);"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 hotel-single mt-4 mb-5 ftco-animate">
+                        <span>Khách sạn Phổ biến</span>
+                        <h2>@Model.RestaurantName</h2>
+                        <div class="rate mb-2">
+                            <p class="loc">
+                                <a href="#"><i class="icon-map"></i>Rất hân hạnh được phục vụ quý khách</a>
+                            </p>
+                            <span class="star">
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="fas fa-star" style="color: #FFD700;"></i>
+                                <i class="far fa-star"></i>
+                                8 Rating
+
+                            </span>
+                        </div>
+                        @Html.Raw(Model.Description)
+
+                        <div class="col-md-12 hotel-single ftco-animate mb-5 mt-5">
+                            <h4 class="mb-4">Nhà hàng liên quan</h4>
+                            <div class="row">
+                                @foreach (var item in ViewBag.relateRestaurants)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="destination">
+                                            <a href="hotel-single.html" class="img img-2" style="background-image: url(images/hotel-1.jpg);"></a>
+                                            <div class="text p-3">
+                                                <div class="item-restaurant">
+                                                    <div class="one">
+                                                        <img src="~/@item.ImageLink" />
+                                                        <h3><a href="hotel-single.html">@item.RestaurantName</a></h3>
+                                                        <p class="rate">
+                                                            <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                            <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                            <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                            <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                            <i class="fas fa-star-o"></i>
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+                                                <p>Chúng tôi rất mong được phục vụ quý khách</p>
+                                                <hr>
+                                                <p class="bottom-area d-flex">
+                                                    <span class="ml-auto"><a href="~/Restaurant/Detail?id=@Model.RestaurantId">XEM</a></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- .col-md-8 -->
+            </div>
+        </div>
+    </div>
+</section> <!-- .section -->

@@ -1,0 +1,273 @@
+﻿@using UMCTravelTour.Web.ViewModels
+@model CustomerCommentTour
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 p-3" style="background-color: white;">
+            <div class="page-header border-bottom mb-4">
+                <h1>
+                    Comments
+                </h1>
+            </div>
+            @if (Model.CustomerComments != null)
+            {
+                @if (User.Identity.Name == null)
+                {
+                    <div class="text-success">
+                        Let's login to comment
+                        <a onclick="loginReturnUrl()" style="cursor: pointer; text-decoration: underline; color: black;">LOGIN</a>
+                    </div>
+                }
+                else
+                {
+                    @if (Model.CurrentUser != null)
+                    {
+                        @if (Model.AllowComment)
+                        {
+                            <div class="media border border-success mb-4 rounded">
+                                <p class="m-1 mr-2" style="border: 1px solid lightgray;">
+                                    <img src="https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png" alt="#" style="width: 50px !important; height: 50px !important; margin-bottom: 0 !important;" />
+                                </p>
+                                <div class="media-body pr-3">
+                                    <h4 class="media-heading" style="font-size: 14px; font-weight: bold; margin-bottom: -15px;">
+                                        @Model.CurrentUser.CustomerName
+                                    </h4>
+                                    <form asp-action="Create" asp-controller="Comments" asp-route-tourId="@Model.TourId">
+                                        <p>
+                                            <input id="CustomerId" name="CustomerId" value="@Model.CurrentUser.CustomerId" hidden />
+                                            <input id="TourId" name="TourId" value="@Model.TourId" hidden />
+                                            <input type="number" name="RatePoint" id="RatePoint" min="1" max="5" value="5" hidden />
+                                            @if (!@Model.CustomerComments.Any(cc => cc.CustomerVm.CustomerId == Model.CurrentUser.CustomerId))
+                                            {
+                                                <div class="rating ml-1" role="option">
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-1" data-rating="1" tabindex="0" aria-label="Rate as one out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-2" data-rating="2" tabindex="0" aria-label="Rate as two out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-3" data-rating="3" tabindex="0" aria-label="Rate as three out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-4" data-rating="4" tabindex="0" aria-label="Rate as four out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-5" data-rating="5" tabindex="0" aria-label="Rate as five out of 5 stars" role="radio"></i>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    <small><i>Already rated</i></small>
+                                                </div>
+                                            }
+                                        </p>
+                                        <div>
+                                            <textarea id="Content" class="mr-2" name="Content"></textarea>
+                                            <button type="submit" class="btn btn-info float-right w-25 mb-3">Comment</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-success">
+                                Let's take a tour and come back later to give feedback
+                                <a href="#">Booking now</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-danger">
+                            This account may not have customer information (belongs to our company)
+                        </div>
+                    }
+                }
+                <div>
+                    @if (Model.CustomerComments.Count() == 1)
+                    {
+                        <small>1 comment</small>
+                    }
+                    else
+                    {
+                        if (Model.CustomerComments.Count() < Model.NumberOfComment)
+                        {
+                            <small>@Model.CustomerComments.Count() comments</small>
+                        }
+                        else
+                        {
+                            <small>@Model.NumberOfComment comments</small>
+                        }
+                        if (Model.CustomerComments.Count() > Model.NumberOfComment)
+                        {
+                            int noc = Model.NumberOfComment;
+                            if(noc <= Model.CustomerComments.Count())
+                            {
+                                noc += 5;
+                            }
+                            <a href="@Url.Action("TourDetail", "Tour", new {id = Model.TourId, showComment = noc})">Show more</a>
+                        }
+                    }
+                </div>
+                <div class="comments-list" style="overflow: auto; max-height: 800px;">
+                    @{
+                        int d = 0;
+                    }
+                    @foreach (var cc in Model.CustomerComments)
+                    {
+                        if (d == Model.NumberOfComment)
+                        {
+                            break;
+                        }
+                        d++;
+                        <div class="media border mb-4" style="border-radius: 4px; box-shadow: 8px 8px 4px #aaaaaa">
+                            <p class="m-1 mr-2" style="border: 1px solid lightgray;">
+                                <img src="https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png" alt="#" style="width: 50px !important; height: 50px !important; margin-bottom: 0 !important;" />
+                            </p>
+                            <div class="media-body">
+                                <h4 class="media-heading" style="font-size: 14px; font-weight: bold;">
+                                    @cc.CustomerVm.CustomerName
+                                    <small class="float-right mr-2">@cc.CommentVm.LastModifiedOn</small>
+                                </h4>
+                                <p>
+                                    @for (int i = 0; i < @cc.CommentVm.RatePoint; i++)
+                                    {
+                                        <i class="fa fa-star text-warning"></i>
+                                    }
+                                    @for (int j = 0; j < (5 - cc.CommentVm.RatePoint); j++)
+                                    {
+                                        <i class="fa fa-star"></i>
+                                    }
+                                </p>
+                                <p class="pr-3" style="justify-content: center;">
+                                    @cc.CommentVm.Content
+                                </p>
+                                @if (Model.CurrentUser != null)
+                                {
+                                    @if (cc.CustomerVm.CustomerId == Model.CurrentUser.CustomerId)
+                                    {
+                                        string target = "#myCommentModal" + cc.CommentVm.Id;
+                                        string targetId = "myCommentModal" + cc.CommentVm.Id;
+                                        <div class="row mx-0 pb-2 pr-2" style="flex-direction: row-reverse !important;">
+                                            <form asp-action="Delete" asp-controller="Comments" asp-route-tourId="@Model.TourId" asp-route-id="@cc.CommentVm.Id">
+                                                <button class="text-danger" type="submit" style="border-top-style: none; border-bottom-style: none; border-left-style: none; border-right-style: none; outline: none; background-color: transparent;">
+                                                    Delete
+                                                </button>
+                                            </form>
+
+                                            <button class="text-primary" data-toggle="modal" data-target="@target" style="border-top-style: none; border-bottom-style: none; border-left-style: none; border-right-style: none; outline: none; background-color: transparent;">
+                                                Edit
+                                            </button>
+                                        </div>
+                                        <div id="@targetId" class="modal" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">@Model.CurrentUser.CustomerName</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form asp-action="Edit" asp-controller="Comments" asp-route-tourId="@Model.TourId">
+                                                        <div class="modal-body">
+                                                            <p>
+                                                                <input id="Id" name="Id" value="@cc.CommentVm.Id" hidden />
+                                                                <input id="CustomerId" name="CustomerId" value="@Model.CurrentUser.CustomerId" hidden />
+                                                                <input id="TourId" name="TourId" value="@Model.TourId" hidden />
+                                                                <input type="number" name="RatePoint" id="RatePoint" min="1" max="5" value="@cc.CommentVm.RatePoint" hidden />
+                                                                @*<div class="rating ml-1" role="option">
+                                                                    <i class="fa fa-star rating-star text-warning" id="rating-1" data-rating="1" tabindex="0" aria-label="Rate as one out of 5 stars" role="radio"></i>
+                                                                    <i class="fa fa-star rating-star text-warning" id="rating-2" data-rating="2" tabindex="0" aria-label="Rate as two out of 5 stars" role="radio"></i>
+                                                                    <i class="fa fa-star rating-star text-warning" id="rating-3" data-rating="3" tabindex="0" aria-label="Rate as three out of 5 stars" role="radio"></i>
+                                                                    <i class="fa fa-star rating-star text-warning" id="rating-4" data-rating="4" tabindex="0" aria-label="Rate as four out of 5 stars" role="radio"></i>
+                                                                    <i class="fa fa-star rating-star text-warning" id="rating-5" data-rating="5" tabindex="0" aria-label="Rate as five out of 5 stars" role="radio"></i>
+                                                                    </div>*@
+                                                            </p>
+                                                            <div>
+                                                                <textarea id="Content" class="mr-2" name="Content">@cc.CommentVm.Content</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                @if (User.Identity.Name == null)
+                {
+                    <div class="text-success">
+                        Let's login to comment
+                        <a onclick="loginReturnUrl()" style="cursor: pointer; text-decoration: underline; color: black;">LOGIN</a>
+                    </div>
+                }
+                else
+                {
+                    @if (Model.CurrentUser != null)
+                    {
+                        @if (Model.AllowComment)
+                        {
+                            <div class="media border border-success mb-4 rounded">
+                                <p class="m-1 mr-2" style="border: 1px solid lightgray;">
+                                    <img src="https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png" alt="#" style="width: 50px !important; height: 50px !important; margin-bottom: 0 !important;" />
+                                </p>
+                                <div class="media-body pr-3">
+                                    <h4 class="media-heading" style="font-size: 14px; font-weight: bold; margin-bottom: -15px;">
+                                        @Model.CurrentUser.CustomerName
+                                    </h4>
+                                    <form asp-action="Create" asp-controller="Comments" asp-route-tourId="@Model.TourId">
+                                        <p>
+                                            <input id="CustomerId" name="CustomerId" value="@Model.CurrentUser.CustomerId" hidden />
+                                            <input id="TourId" name="TourId" value="@Model.TourId" hidden />
+                                            <input type="number" name="RatePoint" id="RatePoint" min="1" max="5" value="5" hidden />
+                                            @if (@Model.CustomerComments == null || !@Model.CustomerComments.Any(cc => cc.CustomerVm.CustomerId == Model.CurrentUser.CustomerId))
+                                            {
+                                                <div class="rating ml-1" role="option">
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-1" data-rating="1" tabindex="0" aria-label="Rate as one out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-2" data-rating="2" tabindex="0" aria-label="Rate as two out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-3" data-rating="3" tabindex="0" aria-label="Rate as three out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-4" data-rating="4" tabindex="0" aria-label="Rate as four out of 5 stars" role="radio"></i>
+                                                    <i class="fa fa-star rating-star text-warning" id="rating-5" data-rating="5" tabindex="0" aria-label="Rate as five out of 5 stars" role="radio"></i>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    <small><i>Already rated</i></small>
+                                                </div>
+                                            }
+                                        </p>
+                                        <div>
+                                            <textarea id="Content" class="mr-2" name="Content"></textarea>
+                                            <button type="submit" class="btn btn-info float-right w-25 mb-3">Comment</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-success">
+                                Let's take a tour and come back later to give feedback
+                                <a href="#">Booking now</a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-danger">
+                            This account may not have customer information (belongs to our company)
+                        </div>
+                    }
+                }
+                <div>
+                    <small>0 comment</small>
+                </div>
+            }
+        </div>
+    </div>
+</div>
