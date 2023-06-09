@@ -11,5 +11,6 @@ namespace UMCTravelTour.DAL.IRepositories
     public interface IRoomRepository : IGenericRepository<Room>
     {
         public Task<IEnumerable<Room>> GetRoomByHotelIdAsync(int hotelId);
+        public Task<Room> GetRoomById(int hotelId);
     }
 }

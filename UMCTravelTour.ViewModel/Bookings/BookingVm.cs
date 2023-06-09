@@ -21,6 +21,7 @@ namespace UMCTravelTour.ViewModel.Bookings
 
         [Display(Name = "Khách hàng")]
         public int CustomerId { get; set; }
+        [Display(Name = "Mã chuyến đi")]
         public int TourId { get; set; }
         [Required(ErrorMessage = "Bạn phải nhập ngày khởi hành")]
         [Display(Name = "Ngày khởi hành")]
@@ -41,6 +42,8 @@ namespace UMCTravelTour.ViewModel.Bookings
 
         [Display(Name = "Phòng")]
         public int RoomId { get; set; }
+        [Display(Name = "Khách Sạn")]
+        public int HotelId { get; set; }
         [Display(Name = "Tạm tính")]
         public decimal ExpectedPrice { get; set; } 
         [MaxLength(150)]

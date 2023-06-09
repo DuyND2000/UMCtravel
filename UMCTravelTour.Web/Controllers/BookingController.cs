@@ -28,11 +28,11 @@ namespace UMCTravelTour.Web.Controllers
                 var data = await _bookingService.GetByCustomerId(currentUser.CustomerId);
                 return View(data);
             }
-            return View("You dont have any booking! Let Book now");
+            return View("Bạn không có bất kỳ đặt phòng! Đặt ngay");
         }
-        public async Task<IActionResult> Tracking(int bookingId)
+        public async Task<IActionResult> Tracking(int Id)
         {
-            var data = await _bookingService.GetByIdAsync(bookingId);
+            var data = await _bookingService.GetByIdAsync(Id);
             return View(data);
         }
     }

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\UMCTravelTour.Web.props" />
+</Project>

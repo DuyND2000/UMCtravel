@@ -16,7 +16,7 @@ namespace UMCTravelTour.Service.Rooms
          Task<ResponseResult<RoomVm>> AddAsync(RoomVm roomVm);
          Task<ResponseResult<RoomVm>> UpdateAsync(RoomVm roomVm);
          Task<ResponseResult<RoomVm>> DeleteAsync(int id, int id2);
-         Task<RoomVm> GetByIdAsync(int id, int id2);
+        public Task<RoomVm> GetByIdAsync(int id, int id2);
         public Task<IEnumerable<RoomVm>> GetRoomByHotelIdAsync(int hotelId);
         public PagedVm<RoomVm> GetPaging(FilterPaging filterPaging);
         public bool CheckRoomIdInHotel(int hotelId, int roomId);

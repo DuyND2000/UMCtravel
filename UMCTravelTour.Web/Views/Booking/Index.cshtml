@@ -1,8 +1,18 @@
-﻿@using UMCTravelTour.Service.Customers
+﻿@using Microsoft.AspNetCore.Http;
+@using UMCTravelTour.Service.Customers
 @model IEnumerable<UMCTravelTour.ViewModel.Bookings.BookingVm>
 @inject ICustomerService _customerService;
 @{
     ViewData["Title"] = "Booking của bạn";
+}
+
+@section Scripts {
+    <script type="text/JavaScript">
+        if (ViewData["NotFound"] != null) {
+            alert(ViewData["NotFound"]);
+            return;
+        }
+    </script>
 }
 <partial name="_HeaderPartial" />
 <div class="container">
@@ -33,37 +43,27 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
+                <tr>
+                    <td style="vertical-align:middle; text-align:center">
                     @item.StartDate.ToShortDateString()
                 </td>
-                <td>
+                    <td style="vertical-align:middle; text-align:center">
                     @item.EndDate.ToShortDateString()
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.TourParticipantCount)
-                </td>*@
-                <td>
+                    <td style="vertical-align:middle; text-align:center">
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
-                @*<td>
-                    @_customerService.GetById(item.CustomerId).CustomerName <br />
-                    <small>ID: @Html.DisplayFor(modelItem => item.CustomerId)</small>
-                </td>*@
-                @*<td>
-                    @item.ExpectedPrice.ToString("N0")
-                </td>*@
-                <td>
+                    <td style="vertical-align:middle; text-align:center">
                     @Html.DisplayFor(modelItem => item.TourId)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalPrice)
+                    <td style="vertical-align:middle; text-align:center">
+                    @Html.DisplayFor(modelItem => item.ExpectedPrice)
                 </td>
                 <!-- Example single danger button -->
 
             <td class="center">
-                    <div class="btn-group">
-                        <a asp-action="Tracking" asp-route-id="@item.BookingId" class="btn btn-outline-success"><i class="fa fa-edit"></i></a>
+                    <div class="btn-group" style="margin-top:0">
+                        <a class="btn-solid-reg page-scroll" href="@Url.Action("Tracking","Booking", new { id = item.BookingId})">XEM CHI TIẾT</a>
                     </div>
                 </td>
             </tr>

@@ -21,5 +21,9 @@ namespace UMCTravelTour.DAL.Repositories
         {
            return await DbSet.Include(x=>x.Hotel).Where(x=>x.HotelId == hotelId).ToListAsync();
         }
+        public async Task<Room> GetRoomById(int id)
+        {
+            return await DbSet.FindAsync(id);
+        }
     }
 }

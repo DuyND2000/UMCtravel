@@ -14,7 +14,7 @@
             <input type="hidden" asp-for="TourId" />
             <partial name="_CreateOrEditPartial" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Lưu" class="btn btn-primary" />
                 <button type="submit" asp-action="Delete" asp-route-id="@Model.TourId" class="btn btn-danger">Xoá</button>
                 <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
             </div>
